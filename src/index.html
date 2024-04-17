@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SQL and node.js</title>
+    </head>
+<body>
+    <h1>Data Import</h1>
+    <button onclick="addData()">Import Data</button>
+    <button onclick="closeConnection()">Close Connection</button>
+    <p></p>
+
+    <script>
+
+    function addData(){
+        fetch("/addRecipe", {
+                method: 'POST',
+            }).then((res) => res.json())
+            .catch((err) => console.log(err))
+    }
+
+    function closeConnection(){
+        console.log('closing...')
+        fetch('/close');
+    }
+
+        
+    </script>
+</body>
+</html>
