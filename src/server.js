@@ -6,6 +6,7 @@ const Request = require('tedious').Request;
 const TYPES = require('tedious').TYPES;  
 
 const app = express();
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'))
@@ -52,8 +53,12 @@ app.get('/close', (req, res) => {
 
 // Function to add recipe
 app.post('/addRecipe', (req, res) => {
+    console.log('Body: ');
+    const { username, password } = req.body;
+    const { authorization } = req.headers;
+    console.log(authorization);
     let request = new Request('AddRecipe', function(err) {
-        console.log(err);
+        // console.log(err);
     });
 
     let ID = 98765432;
