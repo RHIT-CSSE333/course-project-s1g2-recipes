@@ -1,20 +1,16 @@
-// Load in stuff from the tedious module
+// Importing modules
 const express = require('express');
-const path = require('path');
+const app = express();
 const Connection = require('tedious').Connection; 
 const Request = require('tedious').Request;  
 const TYPES = require('tedious').TYPES;  
 
-const app = express();
 app.use(express.json());
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'))
+    res.sendFile(__dirname + '/public/index.html');
 });
-
-app.listen(8080, () => {
-    console.log('Server is listening on port 8080')
-})
 
 // Configure the environment with correct stuff
 let config = {  
@@ -51,26 +47,26 @@ app.get('/close', (req, res) => {
     process.exit(0);
 })
 
-// Function to add recipe
+// // Function to add recipe
 app.post('/addRecipe', (req, res) => {
-    console.log('Body: ');
-    const { username, password } = req.body;
-    const { authorization } = req.headers;
-    console.log(authorization);
+    console.log(req.body.name)
     let request = new Request('AddRecipe', function(err) {
-        // console.log(err);
+        if(err)
+            console.log('Failed with error: ' + err);
     });
 
-    let ID = 98765432;
-    let servings = 8;
-    let difficulty = 3;
-    let name = "chocolate cake";
-    let date = new Date();
+    let ID = req.body.id;
+    let servings = 1;
+    let difficulty = 1;
+    let name = req.body.name;
+    let date = req.body.submitted;
     let imgURL  = 'https://i1.theportalwiki.net/img/thumb/0/0a/Portal_Cake.png/200px-Portal_Cake.png';
-    let CreatorUsername = 'anandy';
-    let steps = 'The cake is a lie!'
-    let time = '1:00:00';
-    
+    let CreatorUsername = req.body.contributor_id;
+    let steps = req.body.steps;
+    let mins = req.body.minutes;
+    let time = Math.floor(mins/60) + ":" + mins%60 + ":0";
+    if(Math.floor(mins/60)>23)
+        time = null;    
     request.addParameter('ID', TYPES.Int, ID);
     request.addParameter('Servings', TYPES.Int, servings);
     request.addParameter('Difficulty', TYPES.SmallInt, difficulty);
@@ -83,22 +79,12 @@ app.post('/addRecipe', (req, res) => {
     request.addOutputParameter('RetVal', TYPES.Int);
 
     request.on('returnValue', function(parameterName, value, metadata) {
-        console.log(parameterName + ' = ' + value);
+        res.send({value});
     });
 
-    connection.callProcedure(request)
-})
+    connection.callProcedure(request) 
+});
 
-app.post('/addOne', (req, res) => {
-    let request = new Request('AddOne', function(err) {
-        console.log(err);
-    });
-
-    request.addOutputParameter('val', TYPES.Int);
-
-    request.on('returnValue', function(parameterName, value, metadata){
-        console.log(parameterName + ' = ' + value);
-    })
-
-    connection.callProcedure(request);
-})
+app.listen(3000, () => {
+    console.log('Our express server is up on port 3000');
+});

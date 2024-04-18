@@ -1,0 +1,107 @@
+body{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+#pageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputfile{
+    border: 1px solid teal;
+    font-size: large;
+    font-weight: bold;
+}
+
+.inputfile::file-selector-button {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: black;
+    background-color: transparent;
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid teal;
+}
+
+.inputfile::file-selector-button:hover{
+    background-color: teal;
+    color: white;
+}
+
+button{
+    background-color: white;
+    color: black;
+    border: 1px solid teal;
+    padding: 5px;
+    margin: 20px;
+    font-size: large;
+}
+
+button:hover{
+    background-color: teal;
+    color: white;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.material-symbols-outlined{
+    padding: 5px;
+}
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #myProgress {
+    width: 100%;
+    background-color: grey;
+  }
+  
+  #myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+  }
