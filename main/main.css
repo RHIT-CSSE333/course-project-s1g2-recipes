@@ -1,0 +1,232 @@
+body{
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    overflow-x: hidden;
+}
+
+nav{
+    /* background-color: #141E46; */
+    padding: 5vh 10vh 5vh 10vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1em;
+}
+
+.navButton{
+    font-size: large;
+    font-weight: bolder;
+    text-align: center;
+    background-color: white;
+    border: none;
+    color: #141E46;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.navButton:hover{
+    color: #41B06E;
+    border-bottom: 1px solid #141E46;
+}
+
+.icon{
+    margin-right: auto;
+    margin-left: 0;
+    width: 230px;
+    height: 48px;
+    cursor: pointer;
+    transition-duration: .2s;
+}
+
+.icon:hover{
+    transform: scale(1.2);
+    transition-duration: .2s;
+}
+
+#top{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    color: #141E46;
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    /* border: 10px solid #141E46; */
+}
+
+h1{
+    font-size: 5em;
+}
+
+h1 span{
+    color: #41B06E;
+}
+
+#top p{
+    font-size: xx-large;
+    font-weight: 400;
+    color: #141E46;
+}
+
+#popular{
+    display: flex;
+    flex-direction: column;
+    margin: 10vh;
+    color: #141E46;
+    align-items: center;
+}
+
+#popularContainer{
+    display: flex;
+}
+
+h2{
+    color: black;
+    margin-bottom: 10vh;
+    font-size: 3em;
+    font-weight: 600;
+    border-bottom: 5px solid #41B06E;
+}
+
+hr{
+    border-top: 3px solid #bbb;
+}
+
+.recipeCard{
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    padding: 5vh;
+    margin: 5vh;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: black;
+}
+
+.recipeCard img{
+    width: 100%;
+    align-self: center;
+    margin-bottom: 2em;
+}
+
+.recipeCard p{
+    font-size: large;
+    font-weight: 600;
+    margin: .2em;
+}
+
+.recipeCard h3{
+    color: #141E46;
+    border-bottom: 2px solid #41B06E;
+    font-size: xx-large;
+    margin: 0 0 2vh 0;
+}
+
+.checked {
+    color: orange;
+  }
+
+.recipeCard:hover{
+    transform: scale(1.05);
+    border: 2px solid #41B06E;
+}
+
+.recipeCard:hover h3{
+    text-decoration: underline;
+}
+
+#footer{
+    display: flex;
+    justify-content: space-between;
+    padding: 10vh 10vw;
+    margin: 0;
+    background-color: #41B06E;
+    color: white;
+}
+
+.footerSection{
+    max-width: 30%;
+}
+
+#footer h1{
+    margin: 0;
+    font-size: 2em;
+}
+
+.divider{
+    border-bottom: 2px solid #141E46;
+    width: 5vw;
+    margin-bottom: 5vh;
+}
+
+#footer p{
+    font-size: large;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: .5em;
+}
+
+#recipePage{
+    display: flex;
+    flex-direction: column;
+    margin: 10vh 20vh 10vh 20vw;
+}
+
+#recipeTitle{
+    font-size: 3em;
+}
+
+#recipeImg{
+    width: 50%;
+}
+
+#recipeInfo{
+    width: 50%;
+    margin: 5vh 0 5vh 0;
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    border-bottom: 2px solid #141E46;
+}
+
+#recipeInfo p{
+    font-size: large;
+    font-weight: 600;
+    color: #141E46;
+}
+
+#recipeInfo p span{
+    font-size: large;
+    font-weight: 700;
+    color: #41B06E;
+}
+
+#ingredients ul{
+    list-style-type: square;
+}
+
+li{
+    margin: 1em;
+}
+
+li::marker{
+    color: #41B06E;
+}
+
+#steps{
+    padding: 2em 0;
+    width: 50%;
+    border-bottom: 2px solid #41B06E;
+}
+
+.header{
+    font-size: 2em;
+}
+
+.stepHeader{
+    margin-top: 3em;
+    font-size: medium;
+    font-weight: 700;
+}
