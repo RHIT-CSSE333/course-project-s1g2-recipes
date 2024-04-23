@@ -139,33 +139,59 @@ hr{
 
 #footer{
     display: flex;
-    justify-content: space-between;
-    padding: 10vh 10vw;
-    margin: 0;
-    background-color: #41B06E;
-    color: white;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10vh;
+    background-color: black;
 }
 
 .footerSection{
-    max-width: 30%;
+    margin: 1em;
 }
 
-#footer h1{
-    margin: 0;
-    font-size: 2em;
+.footerSection a{
+    margin: 1em;
+    transition-duration: .3s;
+    color: lightgray;
+    text-decoration: none;
+}
+
+.footerSection a:hover{
+    color: #8DECB4;
+}
+
+.footerLinks a{
+    background-color: #8DECB4;
+}
+
+#footerHead{
+    font-size: 2.5em;
+    margin-bottom: 1em;
+    color: white;
 }
 
 .divider{
-    border-bottom: 2px solid #141E46;
-    width: 5vw;
-    margin-bottom: 5vh;
+    border-bottom: 1px solid #8DECB4;
+    width: 50%;
+    margin: 5vh;
 }
 
 #footer p{
-    font-size: large;
+    font-size: 1em;
     font-weight: 500;
-    line-height: 1.5;
-    margin: .5em;
+    color: gray;
+}
+
+.me{
+    color: #8DECB4;
+    text-decoration: none;
+    transition-duration: .2s;
+}
+
+.me:hover{
+    color: white;
+    text-decoration: underline;
 }
 
 #recipePage{
