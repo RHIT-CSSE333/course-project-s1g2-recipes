@@ -5,7 +5,6 @@ body{
 }
 
 nav{
-    /* background-color: #141E46; */
     padding: 5vh 10vh 5vh 10vh;
     display: flex;
     justify-content: flex-end;
@@ -13,7 +12,14 @@ nav{
     gap: 1em;
 }
 
+nav a{
+    text-decoration: none;
+}
+
 .navButton{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: large;
     font-weight: bolder;
     text-align: center;
@@ -26,7 +32,28 @@ nav{
 
 .navButton:hover{
     color: #41B06E;
+}
+
+.navButton p{
     border-bottom: 1px solid #141E46;
+    width: 0;
+    margin: 0;
+    transition-duration: .3s;
+}
+
+.navButton:hover p{
+    width: 100%;
+}
+
+#accountIcon{
+    height: 5vh;
+    width: 5vh;
+    border-radius: 50%;
+    transition-duration: .2s;
+}
+
+#accountIcon:hover{
+    background-color: #8DECB4;
 }
 
 .icon{
@@ -50,15 +77,18 @@ nav{
     justify-content: center;
     height: 70vh;
     color: #141E46;
-    background-image: url('background.jpg');
+    background-image: url('../images/background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    /* border: 10px solid #141E46; */
 }
 
 h1{
     font-size: 5em;
+}
+
+#top h1{
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 1);
 }
 
 h1 span{
@@ -85,7 +115,7 @@ h1 span{
 
 h2{
     color: black;
-    margin-bottom: 10vh;
+    margin: 0 0 0 5vh;
     font-size: 3em;
     font-weight: 600;
     border-bottom: 5px solid #41B06E;
@@ -161,8 +191,28 @@ hr{
     color: #8DECB4;
 }
 
+.footerLinks{
+    display: flex;
+
+}
+
 .footerLinks a{
-    background-color: #8DECB4;
+    display: flex;
+    margin: 1em;
+    padding: .5em;
+    background-color: #41B06E;
+    border-radius: 50%;
+    transition-duration: .2s;
+}
+
+.footerLinks a:hover{
+    background-color: white;
+    transform: scale(1.2);
+}
+
+.footerLinks img{
+    width: 2em;
+    height: 2em;
 }
 
 #footerHead{
@@ -174,7 +224,7 @@ hr{
 .divider{
     border-bottom: 1px solid #8DECB4;
     width: 50%;
-    margin: 5vh;
+    margin: 1em;
 }
 
 #footer p{
@@ -192,67 +242,4 @@ hr{
 .me:hover{
     color: white;
     text-decoration: underline;
-}
-
-#recipePage{
-    display: flex;
-    flex-direction: column;
-    margin: 10vh 20vh 10vh 20vw;
-}
-
-#recipeTitle{
-    font-size: 3em;
-}
-
-#recipeImg{
-    width: 50%;
-}
-
-#recipeInfo{
-    width: 50%;
-    margin: 5vh 0 5vh 0;
-    display: flex;
-    justify-content: space-evenly;
-    text-align: center;
-    border-bottom: 2px solid #141E46;
-}
-
-#recipeInfo p{
-    font-size: large;
-    font-weight: 600;
-    color: #141E46;
-}
-
-#recipeInfo p span{
-    font-size: large;
-    font-weight: 700;
-    color: #41B06E;
-}
-
-#ingredients ul{
-    list-style-type: square;
-}
-
-li{
-    margin: 1em;
-}
-
-li::marker{
-    color: #41B06E;
-}
-
-#steps{
-    padding: 2em 0;
-    width: 50%;
-    border-bottom: 2px solid #41B06E;
-}
-
-.header{
-    font-size: 2em;
-}
-
-.stepHeader{
-    margin-top: 3em;
-    font-size: medium;
-    font-weight: 700;
 }

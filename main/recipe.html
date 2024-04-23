@@ -9,16 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/recipe.css">
 
     <title>Flavorly</title>
 </head>
 <body>
     <nav>
-        <img class="icon" src="logo.png" onclick="location.href='index.html'">
-        <button class="navButton" >Home</button>
-        <button class="navButton" >About</button>
-        <button class="navButton" >Recipes</button>
+        <img class="icon" src="images/logo.png" onclick="location.href='index.html'">
+        <a href="index.html"><button class="navButton">Home<p></p></button></a>
+        <a><button class="navButton">About<p></p></button></a>
+        <a><button class="navButton">Recipes<p></p></button></a>
+        <a id="accountContainer" href="login.html"><img id="accountIcon" src="images/account.png"></a>
     </nav>    
     <div id="recipePage">
         <h1 id="recipeTitle">Easy Korean Beef Bowl</h1>
@@ -67,16 +69,18 @@
             <a href="index.html">HOME</a>
             <a href="">ABOUT</a>
             <a href="">RECIPES</a>
-            <a href="">REGISTER</a>
+            <a href="register.html">REGISTER</a>
             <a href="">CONTACT</a>
         </div>
         <div class="footerLinks">
-            <a></a>
-            <a></a>
-            <a></a>
+            <a href="https://discord.gg/s6FgNpQwGX"><img src="images/discord.svg"></a>
+            <a href=""><img src="images/instagram.svg"></a>
+            <a href=""><img src="images/twitter.svg"></a>
+            <a href=""><img src="images/youtube.svg"></a>
+            <a href=""><img src="images/share.svg"></a>
         </div>
         <div class="divider"></div>
-        <p>Copywrite &#169;lol All rights reserved | This website was made by <a class="me" href="https://yash-anand.netlify.app/">Yash Anand</a></p>
+        <p>Copywrite &#169;lololol. All rights reserved | This website was made by <a class="me" href="https://yash-anand.netlify.app/">Yash Anand</a></p>
     </div>
 </body>
 </html>
