@@ -45,6 +45,40 @@ nav a{
     width: 100%;
 }
 
+#searchbar{
+    display: flex;
+    margin: 0 1em;
+}
+
+#navSearch{
+    font-size: 1em;
+    width: 15vw;
+    border: none;
+    outline: none;
+    padding: .5em;
+    border: 1px solid gray;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+}
+
+#searchButton{
+    display: flex;
+    align-items: center;
+    background-color: #41B06E;
+    padding: .5em 1em;
+    border: none;
+    border-radius: 0 5px 5px 0;
+}
+
+.material-symbols-outlined {
+    color: white;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 200,
+    'opsz' 48
+}
+
 #accountIcon{
     height: 5vh;
     width: 5vh;
@@ -53,7 +87,7 @@ nav a{
 }
 
 #accountIcon:hover{
-    background-color: #8DECB4;
+    scale: 1.2;
 }
 
 .icon{
@@ -72,8 +106,6 @@ nav a{
 
 #top{
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
     height: 70vh;
     color: #141E46;
@@ -81,6 +113,15 @@ nav a{
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+}
+
+#topContent{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(99, 99, 99, 0.2);
 }
 
 h1{

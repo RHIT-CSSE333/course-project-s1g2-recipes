@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <link rel="stylesheet" href="styles/main.css">
 
@@ -19,11 +20,18 @@
         <a><button class="navButton">Home<p></p></button></a>
         <a><button class="navButton">About<p></p></button></a>
         <a><button class="navButton">Recipes<p></p></button></a>
+        <div id="searchbar">
+            <input id="navSearch" type="text" placeholder="Search...">
+            <button id="searchButton"><span class="material-symbols-outlined">search</span></button>
+        </div>
         <a id="accountContainer" href="login.html"><img id="accountIcon" src="images/account.png"></a>
     </nav>
     <div id="top" >
-        <h1>Welcome to <span>Flavorly</span></h1>
-        <p>Home to all great recipes</p>
+        <div id="topContent">
+            <h1>Welcome to <span>Flavorly</span></h1>
+            <p>Home to all great recipes</p>
+        </div>
+        
     </div>
     <div id="popular">
         <h2>Popular</h1>
