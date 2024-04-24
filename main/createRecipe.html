@@ -1,17 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/recipe.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/recipe.css">
 
-    <title>Flavorly</title>
+  <title>Flavorly</title>
 </head>
+
+<body>
+  <nav>
+    <img class="icon" src="images/logo.png" onclick="location.href='index.html'">
+    <a><button class="navButton">Home<p></p></button></a>
+    <a><button class="navButton">About<p></p></button></a>
+    <a><button class="navButton">Recipes<p></p></button></a>
+    <div id="searchbar">
+      <input id="navSearch" type="text" placeholder="Search...">
+      <button id="searchButton"><span class="material-symbols-outlined">search</span></button>
+    </div>
+    <a id="accountContainer" href="login.html"><img id="accountIcon" src="images/account.png"></a>
+  </nav>
+  <div id="fields">
+    <h2>Create Recipe</h2>
+      <h3 style="display:inline">Name: </h3>
+      <div id="searchbar" style = "display:inline">
+        <input id="navSearch" type="text" placeholder="Search...">
+      </div>
+      <p></p>
+      <h3 style="display:inline">Difficulty: </h3>
+      <div id="searchbar" style="display:inline">
+        <input id="navSearch" type="text" placeholder="Search...">
+      </div>
+      <p></p>
+      <h3 style="display:inline">Servings: </h3>
+      <div id="searchbar" style="display:inline">
+        <input id="navSearch" type="text" placeholder="Search...">
+      </div>
+      <p></p>
+      <h3 style="display:inline">Time: </h3>
+      <div id="searchbar" style="display:inline">
+        <input id="navSearch" type="text" placeholder="Search...">
+      </div>
+      <p></p>
+      <h3 style="display:inline">Steps: </h3>
+      <div id="searchbar" style="display:inline">
+        <input id="navSearch" type="text" placeholder="Search...">
+      </div>
+      <p></p>
+      <h3 style="display:inline">ImageURL: </h3>
+      <div id="searchbar" style="display:inline">
+        <input id="navSearch" type="text" placeholder="Search...">
+      </div>
+      <p></p>
+      <button type="button">Save Recipe</button>
+  </div>
+</body>
+
 </html>
