@@ -18,26 +18,18 @@
         <form id="ingredientForm">
             <div class="input-group">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="IngredientName" name="name" required>
             </div>  
             <div class="input-group">
                 <label for="cost">Cost:</label>
-                <input type="text" id="cost" name="cost" required>
+                <input type="text" id="Cost" name="cost" required>
             </div>
-            <button type="button" onclick="addIngredient()">Confirm</button>
+            <button id = "confirm"> Confirm</button>
         </form>
     </div>
 
-    <script src="app.js"></script>
-    <script>
-        let Ingredient = {
-            name: "sugar",
-            cost: 2.00
-        }
-        fetch('',{
-                method: 'POST',
-                body: JSON.stringify(Ingredient),
-        })
-    </script>
+ 
 </body>
+<script src="scripts/AddIngredient.js"></script>
+
 </html>

@@ -86,12 +86,16 @@ app.post('/AddIngredient', (req, res) => {
             console.log('Failed with error: ' + err);
     });
 
-    let Name = req.body.Name;
-    let Cost = req.body.Cost;
+    let name = req.body.IngredientName;
+    let Cost = req.body.cost;
+    request.addParameter('ID', TYPES.Int, 1);
 
-
-    request.addParameter('ID', TYPES.VarChar, ID);
+    request.addParameter('Name', TYPES.VarChar, name);
     request.addParameter('Cost', TYPES.Money, Cost);
+
+    request.on('returnValue', function (parameterName, value, metadata) {
+        res.send({ value });
+    });
 
     connection.callProcedure(request)
 });
