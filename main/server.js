@@ -1,9 +1,9 @@
 // Importing modules
 const express = require('express');
 const app = express();
-const Connection = require('tedious').Connection; 
-const Request = require('tedious').Request;  
-const TYPES = require('tedious').TYPES;  
+const Connection = require('tedious').Connection;
+const Request = require('tedious').Request;
+const TYPES = require('tedious').TYPES;
 
 app.use(express.json());
 app.use(express.static(__dirname));
@@ -13,12 +13,12 @@ app.get('/', (req, res) => {
 });
 
 // Configure the environment with correct stuff
-let config = {  
-    server: 'golem.csse.rose-hulman.edu',  
+let config = {
+    server: 'golem.csse.rose-hulman.edu',
     authentication: {
         type: 'default',
         options: {
-            userName: 'anandy', 
+            userName: 'anandy',
             password: 'Sparky@4'
         }
     },
@@ -29,12 +29,12 @@ let config = {
 };
 
 // Make connection
-let connection = new Connection(config);  
+let connection = new Connection(config);
 
 // When we connect, this will happen
-connection.on('connect', function(err) {  
+connection.on('connect', function (err) {
     // If no error, then good to proceed.
-    console.log("Connected"); 
+    console.log("Connected");
 });
 
 // Open Connection
@@ -47,23 +47,53 @@ app.get('/close', (req, res) => {
     process.exit(0);
 })
 
-// Function to make a single Java 
+//Function to add single recipe
+app.post('/addSingleRecipe', (req, res) => {
+    console.log(req.body.name)
+    let request = new Request('AddRecipe', function (err) {
+        if (err)
+            console.log('Failed with error: ' + err);
+    });
+    let name = req.body.nameV;
+    let diff = req.body.diffV;
+    let serve = req.body.serveV;
+    let time = req.body.timeV;
+    let steps = req.body.stepsV;
+    let image = req.body.imageV;
+    request.addParameter('ID', TYPES.Int, 1);
+    request.addParameter('Servings', TYPES.Int, serve);
+    request.addParameter('Difficulty', TYPES.SmallInt, diff);
+    request.addParameter('Name', TYPES.VarChar, name);
+    request.addParameter('CreateDate', TYPES.Date, new Date());
+    request.addParameter('ImageURL', TYPES.VarChar, image);
+    request.addParameter('CreatorUsername', TYPES.VarChar, 'anandy');
+    request.addParameter('Steps', TYPES.Text, steps);
+    request.addParameter('Time', TYPES.VarChar, time);
+    request.addOutputParameter('RetVal', TYPES.Int);
 
+    request.on('returnValue', function (parameterName, value, metadata) {
+        res.send({ value });
+    });
+    connection.callProcedure(request)
+});
+
+
+// Function to add a 
 app.post('/AddIngredient', (req, res) => {
     console.log(req.body.name)
-    let request = new Request('AddIngredient', function(err) {
-        if(err)
+    let request = new Request('AddIngredient', function (err) {
+        if (err)
             console.log('Failed with error: ' + err);
     });
 
     let Name = req.body.Name;
     let Cost = req.body.Cost;
 
-    
+
     request.addParameter('ID', TYPES.VarChar, ID);
     request.addParameter('Cost', TYPES.Money, Cost);
 
-    connection.callProcedure(request) 
+    connection.callProcedure(request)
 });
 
 
