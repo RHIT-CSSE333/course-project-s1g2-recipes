@@ -50,6 +50,22 @@ nav a{
     margin: 0 1em;
 }
 
+.searchbar2{
+    display: flex;
+    margin: 0 1em;
+}
+
+.navSearch2{
+    font-size: 1em;
+    width: 15vw;
+    border: none;
+    outline: none;
+    padding: .5em;
+    border: 1px solid gray;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+}
+
 #navSearch{
     font-size: 1em;
     width: 15vw;
