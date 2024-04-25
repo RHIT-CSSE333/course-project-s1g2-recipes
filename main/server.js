@@ -49,6 +49,22 @@ app.get('/close', (req, res) => {
 
 // Function to make a single Java 
 
+app.post('/AddIngredient', (req, res) => {
+    console.log(req.body.name)
+    let request = new Request('AddIngredient', function(err) {
+        if(err)
+            console.log('Failed with error: ' + err);
+    });
+
+    let Name = req.body.Name;
+    let Cost = req.body.Cost;
+
+    
+    request.addParameter('ID', TYPES.VarChar, ID);
+    request.addParameter('Cost', TYPES.Money, Cost);
+
+    connection.callProcedure(request) 
+});
 
 
 

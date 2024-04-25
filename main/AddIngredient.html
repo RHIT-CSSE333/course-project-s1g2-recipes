@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/register.css">
+    <title>Add Ingredient</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Ingredient</h1>
+        <form id="ingredientForm">
+            <div class="input-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>  
+            <div class="input-group">
+                <label for="cost">Cost:</label>
+                <input type="text" id="cost" name="cost" required>
+            </div>
+            <button type="button" onclick="addIngredient()">Confirm</button>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        let Ingredient = {
+            name: "sugar",
+            cost: 2.00
+        }
+        fetch('',{
+                method: 'POST',
+                body: JSON.stringify(Ingredient),
+        })
+    </script>
+</body>
+</html>
