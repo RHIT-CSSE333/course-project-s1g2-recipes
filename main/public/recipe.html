@@ -18,10 +18,14 @@
     <nav>
         <img class="icon" src="images/logo.png" onclick="location.href='index.html'">
         <a href="index.html"><button class="navButton">Home<p></p></button></a>
-        <a><button class="navButton">About<p></p></button></a>
-        <a><button class="navButton">Recipes<p></p></button></a>
+        <a href="AddIngredient.html"><button class="navButton">About<p></p></button></a>
+        <a href="createRecipe.html"><button class="navButton">Recipes<p></p></button></a>
+        <div id="searchbar">
+            <input id="navSearch" type="text" placeholder="Search...">
+            <button id="searchButton"><span class="material-symbols-outlined">search</span></button>
+        </div>
         <a id="accountContainer" href="login.html"><img id="accountIcon" src="images/account.png"></a>
-    </nav>    
+    </nav>
     <div id="recipePage">
         <h1 id="recipeTitle">Easy Korean Beef Bowl</h1>
         <p>By: Yash Anand</p>
@@ -83,4 +87,5 @@
         <p>Copywrite &#169;lololol. All rights reserved | This website was made by <a class="me" href="https://yash-anand.netlify.app/">Yash Anand</a></p>
     </div>
 </body>
+<script src="scripts/main.js"></script>
 </html>
