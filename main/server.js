@@ -89,7 +89,6 @@ app.post('/AddIngredient', (req, res) => {
 
     let name = req.body.name;
     let cost = req.body.cost;
-    // request.addParameter('ID', TYPES.Int, 2);
 
     request.addParameter('Name', TYPES.VarChar, name);
     request.addParameter('Cost', TYPES.Money, cost);
