@@ -7,7 +7,10 @@ btn.addEventListener("click", function () {
     console.log(name);
     console.log(cost);
 
-    let obj = { IngredientName:name, Cost:cost };
+    let obj = { 
+        'name': name, 
+        'cost': cost 
+    }
 
     fetch('/AddIngredient', {
         method: 'POST',
@@ -15,5 +18,7 @@ btn.addEventListener("click", function () {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(obj),
-    });
+    }).then((data)=>{
+        console.log("finished");
+    })
 });

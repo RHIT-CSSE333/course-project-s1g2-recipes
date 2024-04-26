@@ -49,7 +49,7 @@ app.get('/close', (req, res) => {
 
 //Function to add single recipe
 app.post('/addSingleRecipe', (req, res) => {
-    console.log(req.body.name)
+    console.log(req.body.nameV)
     let request = new Request('AddRecipe', function (err) {
         if (err)
             console.log('Failed with error: ' + err);
@@ -60,7 +60,7 @@ app.post('/addSingleRecipe', (req, res) => {
     let time = req.body.timeV;
     let steps = req.body.stepsV;
     let image = req.body.imageV;
-    request.addParameter('ID', TYPES.Int, 1);
+    // request.addParameter('ID', TYPES.Int, 1);
     request.addParameter('Servings', TYPES.Int, serve);
     request.addParameter('Difficulty', TYPES.SmallInt, diff);
     request.addParameter('Name', TYPES.VarChar, name);
@@ -72,6 +72,7 @@ app.post('/addSingleRecipe', (req, res) => {
     request.addOutputParameter('RetVal', TYPES.Int);
 
     request.on('returnValue', function (parameterName, value, metadata) {
+        console.log(value)
         res.send({ value });
     });
     connection.callProcedure(request)
@@ -86,12 +87,12 @@ app.post('/AddIngredient', (req, res) => {
             console.log('Failed with error: ' + err);
     });
 
-    let name = req.body.IngredientName;
-    let Cost = req.body.cost;
-    request.addParameter('ID', TYPES.Int, 1);
+    let name = req.body.name;
+    let cost = req.body.cost;
+    // request.addParameter('ID', TYPES.Int, 2);
 
     request.addParameter('Name', TYPES.VarChar, name);
-    request.addParameter('Cost', TYPES.Money, Cost);
+    request.addParameter('Cost', TYPES.Money, cost);
 
     request.on('returnValue', function (parameterName, value, metadata) {
         res.send({ value });
