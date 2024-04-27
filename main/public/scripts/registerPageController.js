@@ -27,10 +27,8 @@ class RegisterPageController{
                 }
                 obj.name = name;
             }
-            else{
-                action = '/login'
-            }
-        
+            else
+                action = '/login';        
             fetch(action, {
                 method: 'POST',
                 headers: {

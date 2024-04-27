@@ -3,14 +3,42 @@ rhit.auth = null;
 
 rhit.AuthManager = class {
     constructor(){
-        this.user = null;
+        this.user = {name:null, username:null};
+        fetch('/getUser').then((res) => {
+            return res.json();
+        }).then((data) => {
+            this.user = data;
+            rhit.initializePage();
+        })
     }
     signIn(){
         location.href = 'index.html';
-        rhit.initializePage();
     }
     signOut(){
-        this.user = null;
+        fetch('/logout').then(() => {
+            this.user = {name: null, username: null};
+            location.href = 'index.html';
+        });
+    }
+}
+
+rhit.NavController = class{
+    constructor(){
+        let searchBtn = document.querySelector('#searchButton');
+        let accBtn = document.querySelector('#accountContainer');
+        let accDrop = document.querySelector('#accountDropdown');
+        if(rhit.auth.user.name){
+            accDrop.innerHTML += '<a href="">My Recipes</a>';
+            accDrop.innerHTML += '<a onclick="rhit.auth.signOut()">Sign Out</a>';
+        }
+        else{
+            accDrop.innerHTML += '<a href="login.html">Log In</a>';
+            accDrop.innerHTML += '<a href="register.html">Register</a>';
+        }
+
+        accBtn.addEventListener('click', () => {
+           accDrop.classList.toggle("show");
+        });
     }
 }
 
@@ -18,33 +46,26 @@ rhit.HomePageController = class{
     constructor(){
         if(rhit.auth.user.name != null){
             document.querySelector('#accountContainer').innerHTML = '<p id="pfp">'+rhit.auth.user.name.substring(0,1)+'</p>';
-            console.log('change');
         }
     }
 }
 
 rhit.initializePage = function() {
 	console.log("initializing");
-    fetch('/getUser').then((res) => {
-        return res.json();
-    }).then((data) => {
-        rhit.auth.user = data;
-        console.log(rhit.auth.user);
-        if (document.querySelector("#top")) {
-            console.log("home");
-            new rhit.HomePageController();
-        }
-        if (document.querySelector("#registerPage")) {
-            console.log("register");
-            rhit.RegisterPageController = RegisterPageController;
-            new rhit.RegisterPageController();
-        }
-    })
+    if (document.querySelector("#top")) {
+        console.log("home");
+        new rhit.HomePageController();
+        new rhit.NavController();
+    }
+    if (document.querySelector("#registerPage")) {
+        console.log("register");
+        rhit.RegisterPageController = RegisterPageController;
+        new rhit.RegisterPageController();
+    }
 }
 
 rhit.main = function () {
 	rhit.auth = new rhit.AuthManager();
-	rhit.initializePage();
-};
+}
 
 rhit.main();

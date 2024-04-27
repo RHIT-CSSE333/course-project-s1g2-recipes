@@ -178,6 +178,13 @@ app.post('/login', (req, res) => {
     connection.execSql(request);
 })
 
+app.get('/logout', (req, res) => {
+    user = {name: null, username: null};
+    res.send()
+    console.log('Logged Out');
+})
+
+
 // Function to get the connection
 app.get('/getUser', (req, res) => {
     res.send(user);
