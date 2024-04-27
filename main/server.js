@@ -178,7 +178,7 @@ app.post('/login', (req, res) => {
     connection.execSql(request);
 })
 
-// Function to close the connection
+// Function to get the connection
 app.get('/getUser', (req, res) => {
     res.send(user);
 })
