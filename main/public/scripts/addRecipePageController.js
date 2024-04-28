@@ -11,7 +11,9 @@ class AddRecipePageController {
             let minutes = document.getElementById('minutesV').value;
             let steps = document.getElementById('stepsV').value;
             let image = document.getElementById('imageV').value;
-            let obj = { nameV: name, diffV: diff, serveV: serve, hoursV: hours, minutesV: minutes, stepsV: steps, imageV: image };
+            var time = hours + ":" + minutes + ":00";
+
+            let obj = { nameV: name, diffV: diff, serveV: serve, timeV: time, stepsV: steps, imageV: image };
             fetch('/addSingleRecipe', {
                 method: 'POST',
                 headers: {

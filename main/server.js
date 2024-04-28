@@ -65,6 +65,7 @@ app.post('/addSingleRecipe', (req, res) => {
     let time = req.body.timeV;
     let steps = req.body.stepsV;
     let image = req.body.imageV;
+    console.log(time);
 
     request.addParameter('Servings', TYPES.Int, serve);
     request.addParameter('Difficulty', TYPES.SmallInt, diff);
