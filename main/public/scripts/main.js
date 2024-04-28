@@ -62,6 +62,11 @@ rhit.initializePage = function() {
         rhit.RegisterPageController = RegisterPageController;
         new rhit.RegisterPageController();
     }
+    if (document.querySelector("#createRecipePage")) {
+        console.log("addRecipe");
+        rhit.AddRecipePageController = AddRecipePageController;
+        new rhit.AddRecipePageController();
+    }
 }
 
 rhit.main = function () {
