@@ -11,9 +11,11 @@ class AddRecipePageController {
             let minutes = document.getElementById('minutesV').value;
             let steps = document.getElementById('stepsV').value;
             let image = document.getElementById('imageV').value;
-            var time = hours + ":" + minutes + ":00";
+            let time = hours + ":" + minutes + ":00";
+            console.log(rhit.auth.user);
+            let user = rhit.auth.user.username;
 
-            let obj = { nameV: name, diffV: diff, serveV: serve, timeV: time, stepsV: steps, imageV: image };
+            let obj = { nameV: name, diffV: diff, serveV: serve, timeV: time, stepsV: steps, imageV: image, userV: user };
             fetch('/addSingleRecipe', {
                 method: 'POST',
                 headers: {

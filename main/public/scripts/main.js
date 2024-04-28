@@ -28,7 +28,7 @@ rhit.NavController = class{
         let accBtn = document.querySelector('#accountContainer');
         let accDrop = document.querySelector('#accountDropdown');
         if(rhit.auth.user.name){
-            accDrop.innerHTML += '<a href="">My Recipes</a>';
+            accDrop.innerHTML += '<a href="createRecipe.html">My Recipes</a>';
             accDrop.innerHTML += '<a onclick="rhit.auth.signOut()">Sign Out</a>';
         }
         else{

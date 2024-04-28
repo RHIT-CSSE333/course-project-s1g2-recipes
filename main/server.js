@@ -65,13 +65,14 @@ app.post('/addSingleRecipe', (req, res) => {
     let time = req.body.timeV;
     let steps = req.body.stepsV;
     let image = req.body.imageV;
-    console.log(time);
+    let user = req.body.userV;
+    console.log(user);
 
     request.addParameter('Servings', TYPES.Int, serve);
     request.addParameter('Difficulty', TYPES.SmallInt, diff);
     request.addParameter('Name', TYPES.VarChar, name);
     request.addParameter('ImageURL', TYPES.VarChar, image);
-    request.addParameter('CreatorUsername', TYPES.VarChar, 'anandy');
+    request.addParameter('CreatorUsername', TYPES.VarChar, user);
     request.addParameter('Steps', TYPES.Text, steps);
     request.addParameter('Time', TYPES.VarChar, time);
     request.addOutputParameter('RetVal', TYPES.Int);
@@ -126,13 +127,13 @@ app.post('/register', (req, res) => {
     request.addOutputParameter('RetVal', TYPES.Int);
 
     request.on('returnValue', function (parameterName, value, metadata) {
-        if(value == 0){
+        if (value == 0) {
             user = {
                 'name': name,
                 'username': username
             }
         }
-        res.send({val: value });
+        res.send({ val: value });
     });
 
     connection.callProcedure(request);
@@ -146,41 +147,41 @@ app.post('/login', (req, res) => {
     let salt = null;
     let hash = null;
     let name = null;
-    let request = new Request("select passwordHash, passwordSalt, [name] from [user] where username = '"+username+"'", function (err) {
+    let request = new Request("select passwordHash, passwordSalt, [name] from [user] where username = '" + username + "'", function (err) {
         if (err)
             console.log('Failed with error: ' + err);
     });
-    request.on('row', function (columns) { 
+    request.on('row', function (columns) {
         hash = columns[0].value;
         salt = columns[1].value;
         name = columns[2].value;
     });
 
     request.on('requestCompleted', function () {
-        if(hash == null)
-            res.send({val: 1});
-        else{
-            let localHash = userService.hashPassword(pass+salt);
-            if(localHash == hash){
+        if (hash == null)
+            res.send({ val: 1 });
+        else {
+            let localHash = userService.hashPassword(pass + salt);
+            if (localHash == hash) {
                 console.log('Logged In!');
                 user = {
                     'name': name,
                     'username': username
                 }
-                res.send({val: 0});
+                res.send({ val: 0 });
             }
-            else{
+            else {
                 console.log('Wrong Password');
-                res.send({val: 2});
+                res.send({ val: 2 });
             }
         }
-     });
-     
+    });
+
     connection.execSql(request);
 })
 
 app.get('/logout', (req, res) => {
-    user = {name: null, username: null};
+    user = { name: null, username: null };
     res.send()
     console.log('Logged Out');
 })
