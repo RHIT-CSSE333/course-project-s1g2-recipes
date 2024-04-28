@@ -1,0 +1,13 @@
+#allRecipesPage{
+    display: flex;
+    flex-direction: column;
+}
+
+#recipesContainer{
+    display: flex;
+}
+
+#recipesHead{
+    margin: 0 10vh;
+    border-bottom: 2px solid #41B06E;
+}

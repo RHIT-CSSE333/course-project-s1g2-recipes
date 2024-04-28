@@ -95,6 +95,10 @@ nav a{
     'opsz' 48
 }
 
+#accountContainer{
+    cursor: pointer;
+}
+
 #accountIcon{
     height: 5vh;
     width: 5vh;
@@ -124,6 +128,7 @@ nav a{
 
 .dropdown-content a:hover{
     background-color: lightgray;
+    cursor: pointer;
 }
 
 .show {
