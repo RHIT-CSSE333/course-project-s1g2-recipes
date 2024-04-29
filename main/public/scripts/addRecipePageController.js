@@ -1,26 +1,44 @@
 class AddRecipePageController {
     constructor() {
+        console.log("addrecipepagecontroller");
+        //difficulty dropdown menu
         let diffControl = document.querySelector('#diffValue');
-
-        //Create array of options to be added
         let diffArray = [1, 2, 3, 4, 5];
-
-        //Create and append select list
         let diffList = document.createElement('select');
         diffList.setAttribute("id", "mySelect");
         diffControl.appendChild(diffList);
-
-        //Create and append the options
         for (let i = 0; i < diffArray.length; i++) {
             let diffOption = document.createElement('option');
             diffOption.setAttribute("value", diffArray[i]);
             diffOption.text = diffArray[i];
             diffList.appendChild(diffOption);
         }
-        let btn = document.querySelector('#saveRecipeButton');
-        console.log("addrecipepagecontroller");
-        btn.addEventListener("click", function () {
-            console.log("button");
+
+        let catArray = [];
+
+        //Add Categories Button
+        let addCatBtn = document.querySelector('#addCategoryButton');
+        addCatBtn.addEventListener("click", function () {
+            console.log("Add Category Button");
+            let index = catArray.length;
+            catArray[index] = document.createElement('div');
+            catArray[index].innerHTML = '<input id="categoryV" class="navSearch2" type="text" placeholder="Search...">';
+            document.querySelector('#categoryList').append(catArray[index]);
+        });
+
+        //Remove Categories Button
+        let remCatBtn = document.querySelector('#removeCategoryButton');
+        remCatBtn.addEventListener("click", function () {
+            console.log("Remove button");
+            let index = catArray.length - 1;
+            catArray[index].remove();
+            catArray.pop();
+        });
+
+        //Save Recipes Button
+        let saveBtn = document.querySelector('#saveRecipeButton');
+        saveBtn.addEventListener("click", function () {
+            console.log("Save button");
             let name = document.querySelector('#nameV').value;
             let diff = diffList.value;
             let serve = document.querySelector('#serveV').value;
