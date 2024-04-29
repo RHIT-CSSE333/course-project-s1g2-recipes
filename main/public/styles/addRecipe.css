@@ -12,3 +12,8 @@
     border-right: none;
     border-radius: 5px 0 0 5px;
 }
+
+.searchbar{
+    display: flex;
+    margin: 0 1em;
+}
