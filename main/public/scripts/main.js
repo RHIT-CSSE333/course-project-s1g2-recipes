@@ -1,5 +1,6 @@
 let rhit = {};
 rhit.auth = null;
+rhit.recipeManager = null;
 
 rhit.AuthManager = class {
     constructor(){
@@ -52,20 +53,33 @@ rhit.HomePageController = class{
 
 rhit.initializePage = function() {
 	console.log("initializing");
-    if (document.querySelector("#top")) {
+    if(document.querySelector("#top")) {
         console.log("home");
         new rhit.HomePageController();
         new rhit.NavController();
     }
-    if (document.querySelector("#registerPage")) {
+    if(document.querySelector("#registerPage")) {
         console.log("register");
         rhit.RegisterPageController = RegisterPageController;
         new rhit.RegisterPageController();
     }
-    if (document.querySelector("#createRecipePage")) {
+    if(document.querySelector("#createRecipePage")) {
         console.log("addRecipe");
         rhit.AddRecipePageController = AddRecipePageController;
         new rhit.AddRecipePageController();
+    }
+    if(document.querySelector('#allRecipesPage')){
+        console.log("all recipes");
+        rhit.AllRecipesPageController = AllRecipesPageController;
+        new rhit.AllRecipesPageController();
+        new rhit.NavController();
+    }
+    if(document.querySelector('#recipePage')){
+        console.log("recipe");
+        const urlParams = new URLSearchParams(window.location.search);
+        rhit.SingleRecipePageController = SingleRecipePageController;
+        new rhit.SingleRecipePageController(urlParams.get("id"));
+        new rhit.NavController();
     }
 }
 

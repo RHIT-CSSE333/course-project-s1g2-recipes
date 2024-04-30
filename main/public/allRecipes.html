@@ -29,21 +29,9 @@
         <div id="accountDropdown" class="dropdown-content"></div>
     </nav>
     <div id="allRecipesPage">
-        <h1 id="recipesHead">Showing all recipes</h1>
-        <div id="recipesContainer">
-            <div onclick="location.href = 'recipe.html'" class="recipeCard">
-                <img src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2020%2F03%2F5759837.jpg&q=60&c=sc&poi=auto&orient=true&h=512">
-                <h3>Easy Korean Beef Bowl</h3>
-                <p>Rating: 
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span></p>
-                    <br>
-                <p>Difficulty: 3</p>
-            </div>
-        </div>
+        <h1 id="recipesHead">Recipes</h1>
+        <div id="loading"></div>
+        <div id="recipesContainer"></div>
     </div>
     <div id="footer">
         <h1 id="footerHead">Flavorly.com</h1>
@@ -66,4 +54,5 @@
     </div>
 </body>
 <script src="scripts/main.js"></script>
+<script src="scripts/allRcipesPageController.js"></script>
 </html>

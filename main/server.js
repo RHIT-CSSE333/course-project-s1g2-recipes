@@ -192,6 +192,54 @@ app.get('/getUser', (req, res) => {
     res.send(user);
 })
 
+// Function to get all recipes
+app.get('/getRecipes', (req, res) => {
+    let recipes = [];
+    let request = new Request("select id, imageURL, [name], difficulty from recipe", function (err) {
+        if (err)
+            console.log('Failed with error: ' + err);
+    });
+    request.on('row', function (columns) {
+        let obj = {};
+        obj.id = columns[0].value;
+        obj.imageURL = columns[1].value;
+        obj.name = columns[2].value;
+        obj.rating = Math.floor(Math.random()*5)+1;
+        obj.difficulty = columns[3].value;
+        recipes.push(obj);
+    });
+    request.on('requestCompleted', function () {
+        res.send({ 'recipes': recipes });
+    });
+    connection.execSql(request);
+})
+
+// Function to get single recipe with an id
+app.post('/getRecipe', (req, res) => {
+    let id = req.body.id;
+    let obj = {};
+    let request = new Request(`select servings, difficulty, [name], createDate, imageURL, creatorusername, steps, [time] from recipe where id = ${id}`, function (err) {
+        if (err)
+            console.log('Failed with error: ' + err);
+    });
+    request.on('row', function (columns) {
+        obj.servings = columns[0].value;
+        obj.difficulty = columns[1].value;
+        obj.name = columns[2].value;
+        obj.createDate = columns[3].value
+        obj.imageURL = columns[4].value;
+        obj.creatorusername = columns[5].value;
+        let steps = columns[6].value;
+        obj.steps = steps.replaceAll("'", "").split(",");;
+        obj.time = columns[7].value;
+    });
+    request.on('requestCompleted', function () {
+        res.send(obj);
+    });
+
+    connection.execSql(request);
+})
+
 app.listen(3000, () => {
     console.log('Our express server is up on port 3000');
 });

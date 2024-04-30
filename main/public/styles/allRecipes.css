@@ -4,10 +4,24 @@
 }
 
 #recipesContainer{
-    display: flex;
+    display: grid;
+    margin: 0 5vh;
+    grid-template-columns: repeat(4, 1fr);
 }
 
 #recipesHead{
     margin: 0 10vh;
     border-bottom: 2px solid #41B06E;
+}
+
+#loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loadImg{
+    margin: 30vh;
+    width: 10%;
+    height: 10%;
 }

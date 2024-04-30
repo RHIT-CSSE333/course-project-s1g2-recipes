@@ -19,53 +19,16 @@
         <img class="icon" src="images/logo.png" onclick="location.href='index.html'">
         <a href="index.html"><button class="navButton">Home<p></p></button></a>
         <a href="AddIngredient.html"><button class="navButton">About<p></p></button></a>
-        <a href="createRecipe.html"><button class="navButton">Recipes<p></p></button></a>
+        <a href="allRecipes.html"><button class="navButton">Recipes<p></p></button></a>
         <div id="searchbar">
             <input id="navSearch" type="text" placeholder="Search...">
             <button id="searchButton"><span class="material-symbols-outlined">search</span></button>
         </div>
-        <a id="accountContainer" href="login.html"><img id="accountIcon" src="images/account.png"></a>
+        <a id="accountContainer"><img id="accountIcon" src="images/account.png"></a>
+        <div id="accountDropdown" class="dropdown-content"></div>
     </nav>
     <div id="recipePage">
-        <h1 id="recipeTitle">Easy Korean Beef Bowl</h1>
-        <p>By: Yash Anand</p>
-        <p>Rating: 
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span></p>
-        <p>Difficulty: 3</p>
-        <img id="recipeImg" src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2020%2F03%2F5759837.jpg&q=60&c=sc&poi=auto&orient=true&h=512">
-        <div id="recipeInfo">
-            <p>Time to make: <br> <span>25 mins</span></p>
-            <p>Servings: <br> <span>4</span></p>
-        </div>
-        <div id="ingredients">
-            <h1 class="header">Ingredients</h1>
-            <ul>
-                <li>1 pound lean ground beef</li>
-                <li>5 cloves garlic, crushed</li>
-                <li>1 tablespoon freshly grated ginger</li>
-                <li>2 teaspoons toasted sesame oil</li>
-                <li>½ cup reduced-sodium soy sauce</li> 
-                <li>⅓ cup light brown sugar</li>
-                <li>¼ teaspoon crushed red pepper</li>
-                <li>6 green onions, chopped , divided</li>
-                <li>4 cups hot cooked brown rice</li>
-                <li>1 tablespoon toasted sesame seeds</li>
-            </ul>
-            
-        </div>
-        <div id="steps">
-            <h1 class="header">Directions</h1>
-            <p class="stepHeader">Step 1</p>
-            <p>Heat a large skillet over medium-high heat. Add beef and cook, stirring and crumbling into small pieces until browned, 5 to 7 minutes. Drain excess grease.</p>
-            <p class="stepHeader">Step 2</p>
-            <p>Stir in garlic, ginger, and sesame oil and cook until fragrant, about 2 minutes. Stir in soy sauce, brown sugar, and red pepper. Cook until beef absorbs some sauce, about 7 minutes. Add 1/2 of chopped green onions.</p>
-            <p class="stepHeader">Step 3</p>
-            <p>Serve over hot cooked rice; garnish with sesame seeds and remaining green onions.</p>
-        </div>
+
     </div>
     <div id="footer">
         <h1 id="footerHead">Flavorly.com</h1>
@@ -88,4 +51,5 @@
     </div>
 </body>
 <script src="scripts/main.js"></script>
+<script src="scripts/singleRecipePageController.js"></script>
 </html>
