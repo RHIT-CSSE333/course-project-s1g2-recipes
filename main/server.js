@@ -106,6 +106,33 @@ app.post('/AddIngredient', (req, res) => {
     connection.callProcedure(request);
 });
 
+// Function to add Reviews
+app.post('/AddReviews', (req, res) => {
+    console.log(req.body.name)
+    let request = new Request('AddReviews', function (err) {
+        if (err)
+            console.log('Failed with error: ' + err);
+    });
+
+    let stars = 3;
+    let text = req.body.text;
+    let id = req.body.id;
+    let username = req.body.username;
+    
+    // store procedure
+    request.addParameter('stars', TYPES.SmallInt, stars);
+    request.addParameter('Text', TYPES.Text, text);
+    request.addParameter('RecipeID', TYPES.Int, id);
+    request.addParameter('PostUsername', TYPES.VarChar, username);
+
+
+    request.on('returnValue', function (parameterName, value, metadata) {
+        res.send({ value });
+    });
+
+    connection.callProcedure(request);
+});
+
 // Function to register a new user
 app.post('/register', (req, res) => {
     console.log('registering ' + req.body.username);
@@ -243,3 +270,4 @@ app.post('/getRecipe', (req, res) => {
 app.listen(3000, () => {
     console.log('Our express server is up on port 3000');
 });
+
