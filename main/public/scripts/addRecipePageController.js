@@ -17,13 +17,17 @@ class AddRecipePageController {
         //Categories
         let catSearch = [];
         let catRemove = [];
+        let catStrings = [];
         let catIndex = 0;
+        let inc = 0;
         //Add Categories Button
         let addCatBtn = document.querySelector('#addCategoryButton');
         addCatBtn.addEventListener("click", function () {
             console.log("Add Category Button");
+            catStrings[catIndex] = 'catBtnV' + inc;
+            inc++;
             catSearch[catIndex] = document.createElement('div');
-            catSearch[catIndex].innerHTML = '<input class="navSearch2" type="text" placeholder="Search...">';
+            catSearch[catIndex].innerHTML = '<input id = ' + catStrings[catIndex] + ' class ="navSearch2" type="text" placeholder="Search...">';
             catSearch[catIndex].style = "display:inline";
             catRemove[catIndex] = document.createElement('button');
             catRemove[catIndex].innerHTML = 'Remove Category';
@@ -35,6 +39,7 @@ class AddRecipePageController {
                 catRemove[index].remove();
                 catSearch.splice(index, 1);
                 catRemove.splice(index, 1);
+                catStrings.splice(index, 1);
                 catIndex--;
             });
             document.querySelector('#categoryList').append(catSearch[catIndex], catRemove[catIndex], document.createElement('p'));
@@ -55,6 +60,9 @@ class AddRecipePageController {
         let saveBtn = document.querySelector('#saveRecipeButton');
         saveBtn.addEventListener("click", function () {
             console.log("Save button");
+            for (let i = 0; i < catIndex; i++) {
+                console.log("2: " + document.querySelector('#' + catStrings[i]).value);
+            }
             let name = document.querySelector('#nameV').value;
             let diff = diffList.value;
             let serve = document.querySelector('#serveV').value;
@@ -72,7 +80,6 @@ class AddRecipePageController {
             document.querySelector('#minutesV').value = '';
             document.querySelector('#stepsV').value = '';
             document.querySelector('#imageV').value = '';
-            console.log(name + ' bruh');
             fetch('/addSingleRecipe', {
                 method: 'POST',
                 headers: {
