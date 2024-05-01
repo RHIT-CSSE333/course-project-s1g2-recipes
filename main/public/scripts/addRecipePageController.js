@@ -14,31 +14,55 @@ class AddRecipePageController {
             diffList.appendChild(diffOption);
         }
 
-        let catArray = [];
-
+        //Categories
+        let catSearch = [];
+        let catRemove = [];
+        let catStrings = [];
+        let catIndex = 0;
+        let inc = 0;
         //Add Categories Button
         let addCatBtn = document.querySelector('#addCategoryButton');
         addCatBtn.addEventListener("click", function () {
             console.log("Add Category Button");
-            let index = catArray.length;
-            catArray[index] = document.createElement('div');
-            catArray[index].innerHTML = '<input id="categoryV" class="navSearch2" type="text" placeholder="Search...">';
-            document.querySelector('#categoryList').append(catArray[index]);
+            catStrings[catIndex] = 'catBtnV' + inc;
+            inc++;
+            catSearch[catIndex] = document.createElement('div');
+            catSearch[catIndex].innerHTML = '<input id = ' + catStrings[catIndex] + ' class ="navSearch2" type="text" placeholder="Search...">';
+            catSearch[catIndex].style = "display:inline";
+            catRemove[catIndex] = document.createElement('button');
+            catRemove[catIndex].innerHTML = 'Remove Category';
+            catRemove[catIndex].addEventListener("click", function () {
+                console.log("Remove button");
+                console.log(catRemove.indexOf(this))
+                let index = catRemove.indexOf(this);
+                catSearch[index].remove();
+                catRemove[index].remove();
+                catSearch.splice(index, 1);
+                catRemove.splice(index, 1);
+                catStrings.splice(index, 1);
+                catIndex--;
+            });
+            document.querySelector('#categoryList').append(catSearch[catIndex], catRemove[catIndex], document.createElement('p'));
+            // document.querySelector('#categoryList').append(catRemove[catIndex]);
+            catIndex++;
         });
 
         //Remove Categories Button
-        let remCatBtn = document.querySelector('#removeCategoryButton');
-        remCatBtn.addEventListener("click", function () {
-            console.log("Remove button");
-            let index = catArray.length - 1;
-            catArray[index].remove();
-            catArray.pop();
-        });
+        // let remCatBtn = document.querySelector('#removeCategoryButton');
+        // remCatBtn.addEventListener("click", function () {
+        //     console.log("Remove button");
+        //     let index = catArray.length - 1;
+        //     catArray[index].remove();
+        //     catArray.pop();
+        // });
 
         //Save Recipes Button
         let saveBtn = document.querySelector('#saveRecipeButton');
         saveBtn.addEventListener("click", function () {
             console.log("Save button");
+            for (let i = 0; i < catIndex; i++) {
+                console.log("2: " + document.querySelector('#' + catStrings[i]).value);
+            }
             let name = document.querySelector('#nameV').value;
             let diff = diffList.value;
             let serve = document.querySelector('#serveV').value;
@@ -56,7 +80,6 @@ class AddRecipePageController {
             document.querySelector('#minutesV').value = '';
             document.querySelector('#stepsV').value = '';
             document.querySelector('#imageV').value = '';
-            console.log(name + ' bruh');
             fetch('/addSingleRecipe', {
                 method: 'POST',
                 headers: {
