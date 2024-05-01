@@ -56,8 +56,9 @@ app.get('/close', (req, res) => {
 app.post('/addSingleRecipe', (req, res) => {
     console.log(req.body.nameV)
     let request = new Request('AddRecipe', function (err) {
-        if (err)
+        if (err) {
             console.log('Failed with error: ' + err);
+        }
     });
     let name = req.body.nameV;
     let diff = req.body.diffV;
@@ -66,7 +67,6 @@ app.post('/addSingleRecipe', (req, res) => {
     let steps = req.body.stepsV;
     let image = req.body.imageV;
     let user = req.body.userV;
-    console.log(user);
 
     request.addParameter('Servings', TYPES.Int, serve);
     request.addParameter('Difficulty', TYPES.SmallInt, diff);
@@ -76,9 +76,36 @@ app.post('/addSingleRecipe', (req, res) => {
     request.addParameter('Steps', TYPES.Text, steps);
     request.addParameter('Time', TYPES.VarChar, time);
     request.addOutputParameter('RetVal', TYPES.Int);
-
+    request.addOutputParameter('addedID', TYPES.Int);
+    let inc = 0;
     request.on('returnValue', function (parameterName, value, metadata) {
-        console.log(value)
+        inc++;
+        if (inc == 2) {
+            console.log(value);
+            console.log("pogg");
+            res.send({ value });
+        }
+    });
+    connection.callProcedure(request);
+});
+
+// app.post('/searchForCategory', (req, res) => {
+//     console.log("Searching for category: " + req.body.catV);
+
+// });
+
+
+app.post('/createCategory', (req, res) => {
+    console.log(req.body.recipeIDV);
+    let request = new Request('AddCategory', function (err) {
+        if (err) {
+            console.log('Failed with error: ' + err);
+        }
+    });
+    let catV = req.body.cat;
+    console.log("trying to add category: " + catV);
+    request.addParameter('Name', TYPES.VarChar, catV);
+    request.on('returnValue', function (parameterName, value, metadata) {
         res.send({ value });
     });
     connection.callProcedure(request);

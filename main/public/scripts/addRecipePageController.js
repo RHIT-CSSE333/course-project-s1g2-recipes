@@ -1,6 +1,7 @@
 class AddRecipePageController {
     constructor() {
         console.log("addrecipepagecontroller");
+        let addRecipeManager = new AddRecipeManager();
         //difficulty dropdown menu
         let diffControl = document.querySelector('#diffValue');
         let diffArray = [1, 2, 3, 4, 5];
@@ -47,6 +48,7 @@ class AddRecipePageController {
             catIndex++;
         });
 
+
         //Remove Categories Button
         // let remCatBtn = document.querySelector('#removeCategoryButton');
         // remCatBtn.addEventListener("click", function () {
@@ -57,6 +59,7 @@ class AddRecipePageController {
         // });
 
         //Save Recipes Button
+        let recipeID;
         let saveBtn = document.querySelector('#saveRecipeButton');
         saveBtn.addEventListener("click", function () {
             console.log("Save button");
@@ -72,7 +75,6 @@ class AddRecipePageController {
             let image = document.querySelector('#imageV').value;
             let time = hours + ":" + minutes + ":00";
             let user = rhit.auth.user.username;
-
             let obj = { nameV: name, diffV: diff, serveV: serve, timeV: time, stepsV: steps, imageV: image, userV: user };
             document.querySelector('#nameV').value = '';
             document.querySelector('#serveV').value = '';
@@ -80,13 +82,65 @@ class AddRecipePageController {
             document.querySelector('#minutesV').value = '';
             document.querySelector('#stepsV').value = '';
             document.querySelector('#imageV').value = '';
+
+
             fetch('/addSingleRecipe', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(obj),
+            }).then((res) => {
+                return res.json();
+            }).then((data) => {
+                recipeID = data.value;
+                console.log("recipeId " + recipeID);
+                for (let i = 0; i < catIndex; i++) {
+                    addRecipeManager.createCategory(document.querySelector('#' + catStrings[i]).value);
+                    // let catFound = searchForCategory(catSearch[i]);
+                    // console.log(catFound);
+                }
             });
+        });
+    }
+}
+
+class AddRecipeManager {
+    constructor() {
+    }
+    searchForCategory(catV) {
+        let obj = { cat: catV };
+        fetch('/searchCategory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(obj),
+        }).then((res) => {
+            return res.json();
+        }).then((data) => {
+            return data.value;
+        });;
+    }
+    createCategory(catV) {
+        let obj = { cat: catV };
+        console.log(obj.cat);
+        fetch('/createCategory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(obj),
+        });
+    }
+    attachCategory(recipeIDV, catV) {
+        let obj = { recipeID: recipeIDV, cat: catV };
+        fetch('/attachCategory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(obj),
         });
     }
 }
