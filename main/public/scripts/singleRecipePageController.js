@@ -9,10 +9,13 @@ class SingleRecipePageController{
         }).then((res) => {
             return res.json();
         }).then((data) => {
-            this.updateView(data);
+            this.updateView(data,id);
+
         })
     }
-    updateView(recipe){
+    
+
+    updateView(recipe,id){
         document.querySelector('#recipePage').innerHTML = `
             <h1 id="recipeTitle">${recipe.name}</h1>
             <p>By: ${recipe.creatorusername}</p>
@@ -36,6 +39,7 @@ class SingleRecipePageController{
             <div id="steps">
                 <h1 class="header">Directions</h1>
             </div>
+            <button ID = 'moodle'type="button">Reviews</button>
         `;
         let ingList = document.querySelector('#ingList');
         let stepList = document.querySelector('#steps');
@@ -46,5 +50,33 @@ class SingleRecipePageController{
             <p>${recipe.steps[i]}</p>
             `
         }
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+        var post = document.querySelector("#post");
+        let Mbutton = document.querySelector('#moodle').addEventListener('click',()=>{
+            modal.style.display = "block";
+        })
+        span.onclick = function() {
+            modal.style.display = "none";
+          }
+        post.onclick = function(){
+           
+            let username = rhit.auth.user.username
+            let text = document.querySelector('#text').value;
+            let obj = {
+                'text' : text,
+                'username' : username,
+                'id' : id,
+            }
+            fetch('/AddReviews', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(obj),
+            }).then((data)=>{
+                console.log("finished");
+            })
+        }  
     }
 }
