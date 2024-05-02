@@ -309,7 +309,7 @@ app.post('/getRecipe', (req, res) => {
         obj.imageURL = columns[4].value;
         obj.creatorusername = columns[5].value;
         let steps = columns[6].value;
-        obj.steps = steps.replaceAll("'", "").split(",");;
+        obj.steps = steps.substring(1, steps.length-1).split("', '");
         obj.time = columns[7].value;
     });
     request.on('requestCompleted', function () {
