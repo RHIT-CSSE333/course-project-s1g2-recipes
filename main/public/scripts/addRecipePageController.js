@@ -28,7 +28,7 @@ class AddRecipePageController {
             catStrings[catIndex] = 'catBtnV' + catInc;
             catInc++;
             catSearch[catIndex] = document.createElement('div');
-            catSearch[catIndex].innerHTML = '<input id = ' + catStrings[catIndex] + ' class ="navSearch2" type="text" placeholder="Search...">';
+            catSearch[catIndex].innerHTML = '<input id = ' + catStrings[catIndex] + ' type="text" placeholder="Search...">';
             catSearch[catIndex].style = "display:inline";
             catRemove[catIndex] = document.createElement('button');
             catRemove[catIndex].innerHTML = 'Remove Category';
@@ -67,15 +67,15 @@ class AddRecipePageController {
             ingCostStrings[ingIndex] = 'costBtnV' + ingInc;
             ingInc++;
             ingSearch[ingIndex] = document.createElement('div');
-            ingSearch[ingIndex].innerHTML = '<input id = ' + ingIngStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Ingredient">';
+            ingSearch[ingIndex].innerHTML = '<input id = ' + ingIngStrings[ingIndex] + ' type="text" placeholder="Ingredient">';
             ingSearch[ingIndex].style = "display:inline";
 
             ingQuantities[ingIndex] = document.createElement('div');
-            ingQuantities[ingIndex].innerHTML = '<input id = ' + ingQuanStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Quantity">';
+            ingQuantities[ingIndex].innerHTML = '<input id = ' + ingQuanStrings[ingIndex] + ' type="text" placeholder="Quantity">';
             ingQuantities[ingIndex].style = "display:inline";
 
             ingCosts[ingIndex] = document.createElement('div');
-            ingCosts[ingIndex].innerHTML = '<input id = ' + ingCostStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Cost">';
+            ingCosts[ingIndex].innerHTML = '<input id = ' + ingCostStrings[ingIndex] + ' type="text" placeholder="Cost">';
             ingCosts[ingIndex].style = "display:inline";
 
             ingRemove[ingIndex] = document.createElement('button');
