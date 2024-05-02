@@ -51,18 +51,33 @@ class AddRecipePageController {
          //Ingredients
          let ingSearch = [];
          let ingRemove = [];
-         let ingStrings = [];
+         let ingIngStrings = [];
+         let ingQuantities = [];
+         let ingQuanStrings = [];
+         let ingCosts = [];
+         let ingCostStrings = [];
          let ingIndex = 0;
          let ingInc = 0;
         //Add Ingredients Button
         let addIngBtn = document.querySelector('#addIngredientButton');
         addIngBtn.addEventListener("click", function () {
             console.log("Add Ingredient Button");
-            ingStrings[ingIndex] = 'ingBtnV' + ingInc;
+            ingIngStrings[ingIndex] = 'ingBtnV' + ingInc;
+            ingQuanStrings[ingIndex] = 'ingBtnV' + ingInc;
+            ingCostStrings[ingIndex] = 'ingBtnV' + ingInc;
             ingInc++;
             ingSearch[ingIndex] = document.createElement('div');
-            ingSearch[ingIndex].innerHTML = '<input id = ' + ingStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Search...">';
+            ingSearch[ingIndex].innerHTML = '<input id = ' + ingIngStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Ingredient">';
             ingSearch[ingIndex].style = "display:inline";
+
+            ingQuantities[ingIndex] = document.createElement('div');
+            ingQuantities[ingIndex].innerHTML = '<input id = ' + ingQuanStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Quantity">';
+            ingQuantities[ingIndex].style = "display:inline";
+
+            ingCosts[ingIndex] = document.createElement('div');
+            ingCosts[ingIndex].innerHTML = '<input id = ' + ingCostStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Cost">';
+            ingCosts[ingIndex].style = "display:inline";
+            
             ingRemove[ingIndex] = document.createElement('button');
             ingRemove[ingIndex].innerHTML = 'Remove Ingredient';
             ingRemove[ingIndex].addEventListener("click", function () {
@@ -70,13 +85,23 @@ class AddRecipePageController {
                 console.log(ingRemove.indexOf(this))
                 let index = ingRemove.indexOf(this);
                 ingSearch[index].remove();
+                ingQuantities[index].remove();
+                ingCosts[index].remove();
                 ingRemove[index].remove();
                 ingSearch.splice(index, 1);
+                ingQuantities.splice(index, 1);
+                ingCosts.splice(index, 1);
                 ingRemove.splice(index, 1);
-                ingStrings.splice(index, 1);
+                ingIngStrings.splice(index, 1);
+                ingQuanStrings.splice(index, 1);
+                ingCostStrings.splice(index, 1);
                 ingIndex--;
             });
-            document.querySelector('#IngredientList').append(ingSearch[ingIndex], ingRemove[ingIndex], document.createElement('p'));
+            console.log("ingSearch: " + ingSearch[ingIndex]);
+            console.log("ingQuantities: " + ingQuantities[ingIndex]);
+            console.log("ingCosts: " + ingCosts[ingIndex]);
+            console.log("ingRemove: " + ingRemove[ingIndex]);
+            document.querySelector('#ingredientList').append(ingSearch[ingIndex], ingQuantities[ingIndex], ingCosts[ingIndex], ingRemove[ingIndex], document.createElement('p'));
             ingIndex++;
         });
 
