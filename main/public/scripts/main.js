@@ -46,7 +46,7 @@ rhit.NavController = class{
 rhit.HomePageController = class{
     constructor(){
         if(rhit.auth.user.name != null){
-            document.querySelector('#accountContainer').innerHTML = '<p id="pfp">'+rhit.auth.user.name.substring(0,1)+'</p>';
+            document.querySelector('#accountContainer').innerHTML = '<p id="pfp">'+rhit.auth.user.name.substring(0,1).toUpperCase()+'</p>';
         }
     }
 }
