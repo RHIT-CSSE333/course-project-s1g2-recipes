@@ -89,27 +89,35 @@ app.post('/addSingleRecipe', (req, res) => {
     connection.callProcedure(request);
 });
 
-// app.post('/searchForCategory', (req, res) => {
-//     console.log("Searching for category: " + req.body.catV);
 
-// });
+//Function to add categories
+app.post('/addCategory', (req, res) => {
+    let catV = req.body.catV;
+    let recipeIDV = req.body.recipeIDV;
+    catHelper(catV, recipeIDV);
+});
 
-
-app.post('/createCategory', (req, res) => {
-    console.log(req.body.recipeIDV);
+function catHelper(catV, recipeIDV) {
+    if (catV.length == 0) {
+        return;
+    }
     let request = new Request('AddCategory', function (err) {
         if (err) {
             console.log('Failed with error: ' + err);
         }
     });
-    let catV = req.body.cat;
-    console.log("trying to add category: " + catV);
-    request.addParameter('Name', TYPES.VarChar, catV);
-    request.on('returnValue', function (parameterName, value, metadata) {
-        res.send({ value });
+    let catSingle = catV[catV.length - 1];
+    console.log("trying to add category: " + catSingle);
+    request.addParameter('Name', TYPES.VarChar, catSingle);
+    request.addParameter('RecipeID', TYPES.Int, recipeIDV);
+    request.on('requestCompleted', function () {
+        // res.send({ value });
+        console.log("bruh");
+        catV.pop();
+        catHelper(catV, recipeIDV);
     });
     connection.callProcedure(request);
-});
+}
 
 
 // Function to add ingredients
@@ -145,7 +153,7 @@ app.post('/AddReviews', (req, res) => {
     let text = req.body.text;
     let id = req.body.id;
     let username = req.body.username;
-    
+
     // store procedure
     request.addParameter('stars', TYPES.SmallInt, stars);
     request.addParameter('Text', TYPES.Text, text);
@@ -258,7 +266,7 @@ app.get('/getRecipes', (req, res) => {
         obj.id = columns[0].value;
         obj.imageURL = columns[1].value;
         obj.name = columns[2].value;
-        obj.rating = Math.floor(Math.random()*5)+1;
+        obj.rating = Math.floor(Math.random() * 5) + 1;
         obj.difficulty = columns[3].value;
         recipes.push(obj);
     });
