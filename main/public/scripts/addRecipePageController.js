@@ -48,16 +48,16 @@ class AddRecipePageController {
             catIndex++;
         });
 
-         //Ingredients
-         let ingSearch = [];
-         let ingRemove = [];
-         let ingIngStrings = [];
-         let ingQuantities = [];
-         let ingQuanStrings = [];
-         let ingCosts = [];
-         let ingCostStrings = [];
-         let ingIndex = 0;
-         let ingInc = 0;
+        //Ingredients
+        let ingSearch = [];
+        let ingRemove = [];
+        let ingIngStrings = [];
+        let ingQuantities = [];
+        let ingQuanStrings = [];
+        let ingCosts = [];
+        let ingCostStrings = [];
+        let ingIndex = 0;
+        let ingInc = 0;
         //Add Ingredients Button
         let addIngBtn = document.querySelector('#addIngredientButton');
         addIngBtn.addEventListener("click", function () {
@@ -77,7 +77,7 @@ class AddRecipePageController {
             ingCosts[ingIndex] = document.createElement('div');
             ingCosts[ingIndex].innerHTML = '<input id = ' + ingCostStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Cost">';
             ingCosts[ingIndex].style = "display:inline";
-            
+
             ingRemove[ingIndex] = document.createElement('button');
             ingRemove[ingIndex].innerHTML = 'Remove Ingredient';
             ingRemove[ingIndex].addEventListener("click", function () {
@@ -140,7 +140,9 @@ class AddRecipePageController {
 
                 recipeID = data.value;
                 console.log("recipeId " + recipeID);
-                let catValues = []
+
+                //Start adding categories
+                let catValues = [];
                 for (let i = 0; i < catSearch.length; i++) {
                     catValues[i] = document.querySelector('#' + catStrings[i]).value;
                 }
@@ -151,8 +153,29 @@ class AddRecipePageController {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(obj),
-                })
+                }).then((res) => {
+                    return res.json();
+                }).then((data) => {
 
+                    //Start adding ingredients
+
+                    let ingValues = [];
+                    let quanValues = [];
+                    let costValues = [];
+                    for (let i = 0; i < ingIngStrings.length; i++) {
+                        ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
+                        quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
+                        costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
+                    }
+                    let obj2 = { ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
+                    fetch('/addIngredient', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(obj2),
+                    });
+                });
             });
         });
     }
