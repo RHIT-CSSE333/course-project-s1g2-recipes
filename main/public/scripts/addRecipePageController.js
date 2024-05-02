@@ -153,28 +153,26 @@ class AddRecipePageController {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(obj),
-                }).then((res) => {
-                    return res.json();
-                }).then((data) => {
+                });
 
-                    //Start adding ingredients
 
-                    let ingValues = [];
-                    let quanValues = [];
-                    let costValues = [];
-                    for (let i = 0; i < ingIngStrings.length; i++) {
-                        ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
-                        quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
-                        costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
-                    }
-                    let obj2 = { ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
-                    fetch('/addIngredient', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(obj2),
-                    });
+                //Start adding ingredients
+                console.log("AS;LKJF;LSAJDF;LKJDSA;KFJSA;LDKJF;SAD");
+                let ingValues = [];
+                let quanValues = [];
+                let costValues = [];
+                for (let i = 0; i < ingIngStrings.length; i++) {
+                    ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
+                    quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
+                    costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
+                }
+                let obj2 = { ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
+                fetch('/addIngredient', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(obj2),
                 });
             });
         });
