@@ -20,13 +20,13 @@ class AddRecipePageController {
         let catRemove = [];
         let catStrings = [];
         let catIndex = 0;
-        let inc = 0;
+        let catInc = 0;
         //Add Categories Button
         let addCatBtn = document.querySelector('#addCategoryButton');
         addCatBtn.addEventListener("click", function () {
             console.log("Add Category Button");
-            catStrings[catIndex] = 'catBtnV' + inc;
-            inc++;
+            catStrings[catIndex] = 'catBtnV' + catInc;
+            catInc++;
             catSearch[catIndex] = document.createElement('div');
             catSearch[catIndex].innerHTML = '<input id = ' + catStrings[catIndex] + ' class ="navSearch2" type="text" placeholder="Search...">';
             catSearch[catIndex].style = "display:inline";
@@ -46,6 +46,38 @@ class AddRecipePageController {
             document.querySelector('#categoryList').append(catSearch[catIndex], catRemove[catIndex], document.createElement('p'));
             // document.querySelector('#categoryList').append(catRemove[catIndex]);
             catIndex++;
+        });
+
+         //Ingredients
+         let ingSearch = [];
+         let ingRemove = [];
+         let ingStrings = [];
+         let ingIndex = 0;
+         let ingInc = 0;
+        //Add Ingredients Button
+        let addIngBtn = document.querySelector('#addIngredientButton');
+        addIngBtn.addEventListener("click", function () {
+            console.log("Add Ingredient Button");
+            ingStrings[ingIndex] = 'ingBtnV' + ingInc;
+            ingInc++;
+            ingSearch[ingIndex] = document.createElement('div');
+            ingSearch[ingIndex].innerHTML = '<input id = ' + ingStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Search...">';
+            ingSearch[ingIndex].style = "display:inline";
+            ingRemove[ingIndex] = document.createElement('button');
+            ingRemove[ingIndex].innerHTML = 'Remove Ingredient';
+            ingRemove[ingIndex].addEventListener("click", function () {
+                console.log("Remove button");
+                console.log(ingRemove.indexOf(this))
+                let index = ingRemove.indexOf(this);
+                ingSearch[index].remove();
+                ingRemove[index].remove();
+                ingSearch.splice(index, 1);
+                ingRemove.splice(index, 1);
+                ingStrings.splice(index, 1);
+                ingIndex--;
+            });
+            document.querySelector('#IngredientList').append(ingSearch[ingIndex], ingRemove[ingIndex], document.createElement('p'));
+            ingIndex++;
         });
 
         //Save Recipes Button
