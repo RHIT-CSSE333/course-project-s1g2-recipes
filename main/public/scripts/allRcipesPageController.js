@@ -3,7 +3,6 @@ class AllRecipesPageController {
         let container = document.querySelector('#recipesContainer');
         let loader = document.querySelector('#loading');
         let recipes;
-        loader.innerHTML = '<img id="loadImg" src="images/loading.gif">';
         fetch('/getRecipes').then((res) => {
             return res.json();
         }).then((data) => {
