@@ -113,15 +113,69 @@ class AddRecipePageController {
             let minutes = document.querySelector('#minutesV').value;
             let steps = document.querySelector('#stepsV').value;
             let image = document.querySelector('#imageV').value;
-            let time = hours + ":" + minutes + ":00";
             let user = rhit.auth.user.username;
+
+            //Validations
+            if (name == '' || serve == '' || hours == '' || minutes == '' || steps == '') {
+                alert('The following information cannot be left blank: Name, Servings, Hours, Minutes, and Steps');
+                return;
+            }
+
+            if (user == null) {
+                alert('Please sign in');
+                return;
+            }
+            console.log("hours type: " + typeof hours);
+            console.log("minutes type: " + typeof minutes);
+            console.log("serve type: " + typeof serve);
+
+            // if (!(typeof hours === 'number') || !(typeof minutes === 'number') || (typeof serve === 'number')) {
+            //     alert('Please make sure that Servings, Hours, and Minutes are numbers');
+            //     return;
+            // }
+
+            if (hours %1 != 0|| minutes %1 != 0) {
+                alert('Hours and Minutes should be whole numbers');
+                return;
+            }
+
+            if (serve < 0 || minutes < 0 || hours < 0) {
+                alert('Please make the Servings, Hours, and Minutes greater than or equal to 0');
+                return;
+            }
+
+            let catValues = [];
+            let ingValues = [];
+            let quanValues = [];
+            let costValues = [];
+            for (let i = 0; i < catSearch.length; i++) {
+                catValues[i] = document.querySelector('#' + catStrings[i]).value;
+                if (catValues[i] == '') {
+                    alert("Please don't leave any Categories blank");
+                    return;
+                }
+
+            }
+            for (let i = 0; i < ingIngStrings.length; i++) {
+                ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
+                quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
+                costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
+                if (ingValues[i] == '') {
+                    alert("Please assign each Ingredient a Name (you don't have to give them a Cost or Quantity)");
+                    return;
+                }
+                if (costValues[i] != '' && !(typeof costValues[i] === 'number')) {
+                    alert("The cost of an Ingredient must be a number value");
+                    return;
+                }
+                if ((costValues[i] != '' && costValues[i] < 0)) {
+                    alert("The cost of an Ingredient must be greater than or equal to 0")
+                }
+            }
+
+
+            let time = hours + ":" + minutes + ":00";
             let obj = { nameV: name, diffV: diff, serveV: serve, timeV: time, stepsV: steps, imageV: image, userV: user };
-            document.querySelector('#nameV').value = '';
-            document.querySelector('#serveV').value = '';
-            document.querySelector('#hoursV').value = '';
-            document.querySelector('#minutesV').value = '';
-            document.querySelector('#stepsV').value = '';
-            document.querySelector('#imageV').value = '';
 
 
             fetch('/addSingleRecipe', {
@@ -133,23 +187,11 @@ class AddRecipePageController {
             }).then((res) => {
                 return res.json();
             }).then((data) => {
-
                 recipeID = data.value;
                 console.log("recipeId " + recipeID);
 
                 //Start adding categories and ingredients
-                let catValues = [];
-                let ingValues = [];
-                let quanValues = [];
-                let costValues = [];
-                for (let i = 0; i < catSearch.length; i++) {
-                    catValues[i] = document.querySelector('#' + catStrings[i]).value;
-                }
-                for (let i = 0; i < ingIngStrings.length; i++) {
-                    ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
-                    quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
-                    costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
-                }
+
                 let obj = { catV: catValues, ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
                 fetch('/addCategoriesAndIngredients', {
                     method: 'POST',
@@ -158,6 +200,41 @@ class AddRecipePageController {
                     },
                     body: JSON.stringify(obj),
                 });
+
+                document.querySelector('#nameV').value = '';
+                document.querySelector('#serveV').value = '';
+                document.querySelector('#hoursV').value = '';
+                document.querySelector('#minutesV').value = '';
+                document.querySelector('#stepsV').value = '';
+                document.querySelector('#imageV').value = '';
+
+                let ogCatIndex = catIndex;
+                for (let i = 0; i < ogCatIndex; i++) {
+                    let index = catRemove.indexOf(this);
+                    catSearch[index].remove();
+                    catRemove[index].remove();
+                    catSearch.splice(index, 1);
+                    catRemove.splice(index, 1);
+                    catStrings.splice(index, 1);
+                    catIndex--;
+                }
+
+                let ogIngIndex = ingIndex;
+                for (let i = 0; i < ogIngIndex; i++) {
+                    let index = ingRemove.indexOf(this);
+                    ingSearch[index].remove();
+                    ingQuantities[index].remove();
+                    ingCosts[index].remove();
+                    ingRemove[index].remove();
+                    ingSearch.splice(index, 1);
+                    ingQuantities.splice(index, 1);
+                    ingCosts.splice(index, 1);
+                    ingRemove.splice(index, 1);
+                    ingIngStrings.splice(index, 1);
+                    ingQuanStrings.splice(index, 1);
+                    ingCostStrings.splice(index, 1);
+                    ingIndex--;
+                }
             });
         });
     }

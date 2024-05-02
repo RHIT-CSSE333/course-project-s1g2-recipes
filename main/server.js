@@ -138,7 +138,7 @@ function ingHelper(catV, recipeIDV, ingV, quanV, costV) {
     request.addParameter('Name', TYPES.VarChar, ingSingle);
     request.addParameter('RecipeID', TYPES.Int, recipeIDV);
     if (quanSingle == '') {
-        request.addParameter('Quantity', TYPES.Int, null);
+        request.addParameter('Quantity', TYPES.VarChar, null);
     }
     else {
         request.addParameter('Quantity', TYPES.Int, quanSingle);
