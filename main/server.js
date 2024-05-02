@@ -91,14 +91,19 @@ app.post('/addSingleRecipe', (req, res) => {
 
 
 //Function to add categories
-app.post('/addCategory', (req, res) => {
+app.post('/addCategoriesAndIngredients', (req, res) => {
     let catV = req.body.catV;
     let recipeIDV = req.body.recipeIDV;
-    catHelper(catV, recipeIDV);
+    let ingV = req.body.ingV;
+    let quanV = req.body.quanV;
+    let costV = req.body.costV;
+    console.log("ingV: " + ingV);
+    catHelper(catV, recipeIDV, ingV, quanV, costV);
 });
 
-function catHelper(catV, recipeIDV) {
+function catHelper(catV, recipeIDV, ingV, quanV, costV) {
     if (catV.length == 0) {
+        ingHelper(catV, recipeIDV, ingV, quanV, costV);
         return;
     }
     let request = new Request('AddCategory', function (err) {
@@ -112,23 +117,12 @@ function catHelper(catV, recipeIDV) {
     request.addParameter('RecipeID', TYPES.Int, recipeIDV);
     request.on('requestCompleted', function () {
         catV.pop();
-        catHelper(catV, recipeIDV);
+        catHelper(catV, recipeIDV, ingV, quanV, costV);
     });
     connection.callProcedure(request);
 }
 
-//Function to add ingredients
-app.post('/addIngredient', (req, res) => {
-    let ingV = req.body.ingV;
-    let recipeIDV = req.body.recipeIDV;
-    let quanV = req.body.quanV;
-    let costV = req.body.costV;
-    console.log("ing length: " + ingV.length);
-    console.log("cost length: " + costV.length);
-    ingHelper(ingV, recipeIDV, quanV, costV);
-});
-
-function ingHelper(ingV, recipeIDV, quanV, costV) {
+function ingHelper(catV, recipeIDV, ingV, quanV, costV) {
     if (ingV.length == 0) {
         return;
     }
@@ -140,41 +134,29 @@ function ingHelper(ingV, recipeIDV, quanV, costV) {
     let ingSingle = ingV[ingV.length - 1];
     let quanSingle = quanV[quanV.length - 1];
     let costSingle = costV[costV.length - 1];
-    console.log("trying to add category: " + ingSingle + " with quan: " + quanSingle + " with cost: " + costSingle);
+    console.log("trying to add ingredient: " + ingSingle + " with quan: " + quanSingle + " with cost: " + costSingle);
     request.addParameter('Name', TYPES.VarChar, ingSingle);
     request.addParameter('RecipeID', TYPES.Int, recipeIDV);
-    request.addParameter('Cost', TYPES.Money, costSingle);
-    request.addParameter('Quantity', TYPES.Int, quanSingle);
+    if (quanSingle == '') {
+        request.addParameter('Quantity', TYPES.Int, null);
+    }
+    else {
+        request.addParameter('Quantity', TYPES.Int, quanSingle);
+    }
+    if (costSingle == '') {
+        request.addParameter('Cost', TYPES.Money, null);
+    }
+    else {
+        request.addParameter('Cost', TYPES.Money, costSingle);
+    }
     request.on('requestCompleted', function () {
         ingV.pop();
         quanV.pop();
         costV.pop();
-        catHelper(ingV, recipeIDV, quanV, costV);
+        ingHelper(catV, recipeIDV, ingV, quanV, costV);
     });
     connection.callProcedure(request);
 }
-
-
-// Function to add ingredients
-app.post('/AddIngredient', (req, res) => {
-    console.log(req.body.name)
-    let request = new Request('AddIngredient', function (err) {
-        if (err)
-            console.log('Failed with error: ' + err);
-    });
-
-    let name = req.body.name;
-    let cost = req.body.cost;
-
-    request.addParameter('Name', TYPES.VarChar, name);
-    request.addParameter('Cost', TYPES.Money, cost);
-
-    request.on('returnValue', function (parameterName, value, metadata) {
-        res.send({ value });
-    });
-
-    connection.callProcedure(request);
-});
 
 // Function to add Reviews
 app.post('/AddReviews', (req, res) => {

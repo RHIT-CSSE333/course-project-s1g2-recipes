@@ -63,8 +63,8 @@ class AddRecipePageController {
         addIngBtn.addEventListener("click", function () {
             console.log("Add Ingredient Button");
             ingIngStrings[ingIndex] = 'ingBtnV' + ingInc;
-            ingQuanStrings[ingIndex] = 'ingBtnV' + ingInc;
-            ingCostStrings[ingIndex] = 'ingBtnV' + ingInc;
+            ingQuanStrings[ingIndex] = 'quanBtnV' + ingInc;
+            ingCostStrings[ingIndex] = 'costBtnV' + ingInc;
             ingInc++;
             ingSearch[ingIndex] = document.createElement('div');
             ingSearch[ingIndex].innerHTML = '<input id = ' + ingIngStrings[ingIndex] + ' class ="navSearch2" type="text" placeholder="Ingredient">';
@@ -97,10 +97,6 @@ class AddRecipePageController {
                 ingCostStrings.splice(index, 1);
                 ingIndex--;
             });
-            console.log("ingSearch: " + ingSearch[ingIndex]);
-            console.log("ingQuantities: " + ingQuantities[ingIndex]);
-            console.log("ingCosts: " + ingCosts[ingIndex]);
-            console.log("ingRemove: " + ingRemove[ingIndex]);
             document.querySelector('#ingredientList').append(ingSearch[ingIndex], ingQuantities[ingIndex], ingCosts[ingIndex], ingRemove[ingIndex], document.createElement('p'));
             ingIndex++;
         });
@@ -141,38 +137,26 @@ class AddRecipePageController {
                 recipeID = data.value;
                 console.log("recipeId " + recipeID);
 
-                //Start adding categories
+                //Start adding categories and ingredients
                 let catValues = [];
-                for (let i = 0; i < catSearch.length; i++) {
-                    catValues[i] = document.querySelector('#' + catStrings[i]).value;
-                }
-                let obj = { catV: catValues, recipeIDV: recipeID };
-                fetch('/addCategory', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(obj),
-                });
-
-
-                //Start adding ingredients
-                console.log("AS;LKJF;LSAJDF;LKJDSA;KFJSA;LDKJF;SAD");
                 let ingValues = [];
                 let quanValues = [];
                 let costValues = [];
+                for (let i = 0; i < catSearch.length; i++) {
+                    catValues[i] = document.querySelector('#' + catStrings[i]).value;
+                }
                 for (let i = 0; i < ingIngStrings.length; i++) {
                     ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
                     quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
                     costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
                 }
-                let obj2 = { ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
-                fetch('/addIngredient', {
+                let obj = { catV: catValues, ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
+                fetch('/addCategoriesAndIngredients', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(obj2),
+                    body: JSON.stringify(obj),
                 });
             });
         });
