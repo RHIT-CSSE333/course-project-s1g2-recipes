@@ -125,21 +125,33 @@ class AddRecipePageController {
                 alert('Please sign in');
                 return;
             }
-            console.log("hours type: " + typeof hours);
-            console.log("minutes type: " + typeof minutes);
-            console.log("serve type: " + typeof serve);
 
-            // if (!(typeof hours === 'number') || !(typeof minutes === 'number') || (typeof serve === 'number')) {
+            if (hours != '') {
+                hours = Number.parseInt(hours);
+            }
+
+            if (minutes != '') {
+                minutes = Number.parseInt(minutes);
+            }
+
+            if (serve != '') {
+                serve = Number.parseInt(serve);
+            }
+
+            console.log("hours: " + hours);
+            console.log("minutes: " + minutes);
+            console.log("serve: " + serve);
+            // if (hours == NaN || minutes == NaN || serve == NaN) {
             //     alert('Please make sure that Servings, Hours, and Minutes are numbers');
             //     return;
             // }
 
-            if (hours %1 != 0|| minutes %1 != 0) {
-                alert('Hours and Minutes should be whole numbers');
+            if ((hours != '' && hours % 1 != 0) || (minutes != '' && minutes % 1 != 0) || (serve != '' && serve % 1 != 0)) {
+                alert('Hours, Servings, and Minutes should be whole numbers');
                 return;
             }
 
-            if (serve < 0 || minutes < 0 || hours < 0) {
+            if ((serve != '' && serve < 0) || (minutes != '' && minutes < 0) || (hours != '' && hours < 0)) {
                 alert('Please make the Servings, Hours, and Minutes greater than or equal to 0');
                 return;
             }
@@ -160,16 +172,15 @@ class AddRecipePageController {
                 ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
                 quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
                 costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
+                costValues[i] = Number.parseFloat(costValues[i]);
                 if (ingValues[i] == '') {
                     alert("Please assign each Ingredient a Name (you don't have to give them a Cost or Quantity)");
                     return;
                 }
-                if (costValues[i] != '' && !(typeof costValues[i] === 'number')) {
-                    alert("The cost of an Ingredient must be a number value");
+                console.log("costValues " + costValues[i]);
+                if ((costValues[i] != '' && (costValues[i] < 0 || isNaN(costValues[i])))) {
+                    alert("The cost of an Ingredient must be greater than or equal to 0");
                     return;
-                }
-                if ((costValues[i] != '' && costValues[i] < 0)) {
-                    alert("The cost of an Ingredient must be greater than or equal to 0")
                 }
             }
 
@@ -210,29 +221,27 @@ class AddRecipePageController {
 
                 let ogCatIndex = catIndex;
                 for (let i = 0; i < ogCatIndex; i++) {
-                    let index = catRemove.indexOf(this);
-                    catSearch[index].remove();
-                    catRemove[index].remove();
-                    catSearch.splice(index, 1);
-                    catRemove.splice(index, 1);
-                    catStrings.splice(index, 1);
+                    catSearch[0].remove();
+                    catRemove[0].remove();
+                    catSearch.splice(0, 1);
+                    catRemove.splice(0, 1);
+                    catStrings.splice(0, 1);
                     catIndex--;
                 }
 
                 let ogIngIndex = ingIndex;
                 for (let i = 0; i < ogIngIndex; i++) {
-                    let index = ingRemove.indexOf(this);
-                    ingSearch[index].remove();
-                    ingQuantities[index].remove();
-                    ingCosts[index].remove();
-                    ingRemove[index].remove();
-                    ingSearch.splice(index, 1);
-                    ingQuantities.splice(index, 1);
-                    ingCosts.splice(index, 1);
-                    ingRemove.splice(index, 1);
-                    ingIngStrings.splice(index, 1);
-                    ingQuanStrings.splice(index, 1);
-                    ingCostStrings.splice(index, 1);
+                    ingSearch[0].remove();
+                    ingQuantities[0].remove();
+                    ingCosts[0].remove();
+                    ingRemove[0].remove();
+                    ingSearch.splice(0, 1);
+                    ingQuantities.splice(0, 1);
+                    ingCosts.splice(0, 1);
+                    ingRemove.splice(0, 1);
+                    ingIngStrings.splice(0, 1);
+                    ingQuanStrings.splice(0, 1);
+                    ingCostStrings.splice(0, 1);
                     ingIndex--;
                 }
             });
