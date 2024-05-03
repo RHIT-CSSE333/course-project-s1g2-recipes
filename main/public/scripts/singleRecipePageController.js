@@ -88,6 +88,10 @@ class SingleRecipePageController{
         post.onclick = function(){
             let username = rhit.auth.user.username
             let text = document.querySelector('#text').value;
+            if(rating == 0 || text == ''){
+                alert('Please provide a rating and review.')
+                return;
+            }
             let obj = {
                 'text': text,
                 'username': username,
