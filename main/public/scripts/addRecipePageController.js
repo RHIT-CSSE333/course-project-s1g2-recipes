@@ -172,15 +172,18 @@ class AddRecipePageController {
                 ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
                 quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
                 costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
-                costValues[i] = Number.parseFloat(costValues[i]);
+
                 if (ingValues[i] == '') {
                     alert("Please assign each Ingredient a Name (you don't have to give them a Cost or Quantity)");
                     return;
                 }
-                console.log("costValues " + costValues[i]);
-                if ((costValues[i] != '' && (costValues[i] < 0 || isNaN(costValues[i])))) {
-                    alert("The cost of an Ingredient must be greater than or equal to 0");
-                    return;
+                if (costValues[i] != '') {
+                    costValues[i] = Number.parseFloat(costValues[i]);
+                    console.log("costValues " + costValues[i]);
+                    if ((costValues[i] < 0 || isNaN(costValues[i]))) {
+                        alert("The cost of an Ingredient must be greater than or equal to 0");
+                        return;
+                    }
                 }
             }
 
@@ -198,51 +201,57 @@ class AddRecipePageController {
             }).then((res) => {
                 return res.json();
             }).then((data) => {
-                recipeID = data.value;
-                console.log("recipeId " + recipeID);
-
-                //Start adding categories and ingredients
-
-                let obj = { catV: catValues, ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
-                fetch('/addCategoriesAndIngredients', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(obj),
-                });
-
-                document.querySelector('#nameV').value = '';
-                document.querySelector('#serveV').value = '';
-                document.querySelector('#hoursV').value = '';
-                document.querySelector('#minutesV').value = '';
-                document.querySelector('#stepsV').value = '';
-                document.querySelector('#imageV').value = '';
-
-                let ogCatIndex = catIndex;
-                for (let i = 0; i < ogCatIndex; i++) {
-                    catSearch[0].remove();
-                    catRemove[0].remove();
-                    catSearch.splice(0, 1);
-                    catRemove.splice(0, 1);
-                    catStrings.splice(0, 1);
-                    catIndex--;
+                if (data.value < 0) {
+                    alert("This Recipe Name already exists");
+                    return;
                 }
+                else {
+                    recipeID = data.value;
+                    console.log("recipeId " + recipeID);
 
-                let ogIngIndex = ingIndex;
-                for (let i = 0; i < ogIngIndex; i++) {
-                    ingSearch[0].remove();
-                    ingQuantities[0].remove();
-                    ingCosts[0].remove();
-                    ingRemove[0].remove();
-                    ingSearch.splice(0, 1);
-                    ingQuantities.splice(0, 1);
-                    ingCosts.splice(0, 1);
-                    ingRemove.splice(0, 1);
-                    ingIngStrings.splice(0, 1);
-                    ingQuanStrings.splice(0, 1);
-                    ingCostStrings.splice(0, 1);
-                    ingIndex--;
+                    //Start adding categories and ingredients
+
+                    let obj = { catV: catValues, ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
+                    fetch('/addCategoriesAndIngredients', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(obj),
+                    });
+
+                    document.querySelector('#nameV').value = '';
+                    document.querySelector('#serveV').value = '';
+                    document.querySelector('#hoursV').value = '';
+                    document.querySelector('#minutesV').value = '';
+                    document.querySelector('#stepsV').value = '';
+                    document.querySelector('#imageV').value = '';
+
+                    let ogCatIndex = catIndex;
+                    for (let i = 0; i < ogCatIndex; i++) {
+                        catSearch[0].remove();
+                        catRemove[0].remove();
+                        catSearch.splice(0, 1);
+                        catRemove.splice(0, 1);
+                        catStrings.splice(0, 1);
+                        catIndex--;
+                    }
+
+                    let ogIngIndex = ingIndex;
+                    for (let i = 0; i < ogIngIndex; i++) {
+                        ingSearch[0].remove();
+                        ingQuantities[0].remove();
+                        ingCosts[0].remove();
+                        ingRemove[0].remove();
+                        ingSearch.splice(0, 1);
+                        ingQuantities.splice(0, 1);
+                        ingCosts.splice(0, 1);
+                        ingRemove.splice(0, 1);
+                        ingIngStrings.splice(0, 1);
+                        ingQuanStrings.splice(0, 1);
+                        ingCostStrings.splice(0, 1);
+                        ingIndex--;
+                    }
                 }
             });
         });

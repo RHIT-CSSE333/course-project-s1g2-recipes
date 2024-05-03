@@ -80,6 +80,10 @@ app.post('/addSingleRecipe', (req, res) => {
     let inc = 0;
     request.on('returnValue', function (parameterName, value, metadata) {
         inc++;
+        if (inc == 1 && value == -1) {
+            console.log('Name exists');
+            res.send({ value });
+        }
         if (inc == 2) {
             console.log(value);
             console.log("pogg");
@@ -309,7 +313,7 @@ app.post('/getRecipe', (req, res) => {
         obj.imageURL = columns[4].value;
         obj.creatorusername = columns[5].value;
         let steps = columns[6].value;
-        obj.steps = steps.substring(1, steps.length-1).split("', '");
+        obj.steps = steps.substring(1, steps.length - 1).split("', '");
         obj.time = columns[7].value;
     });
     request.on('requestCompleted', function () {
