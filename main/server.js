@@ -80,6 +80,10 @@ app.post('/addSingleRecipe', (req, res) => {
     let inc = 0;
     request.on('returnValue', function (parameterName, value, metadata) {
         inc++;
+        if (inc == 1 && value == -1) {
+            console.log('Name exists');
+            res.send({ value });
+        }
         if (inc == 2) {
             res.send({ value });
         }
@@ -136,7 +140,7 @@ function ingHelper(catV, recipeIDV, ingV, quanV, costV) {
     request.addParameter('Name', TYPES.VarChar, ingSingle);
     request.addParameter('RecipeID', TYPES.Int, recipeIDV);
     if (quanSingle == '') {
-        request.addParameter('Quantity', TYPES.Int, null);
+        request.addParameter('Quantity', TYPES.VarChar, null);
     }
     else {
         request.addParameter('Quantity', TYPES.Int, quanSingle);

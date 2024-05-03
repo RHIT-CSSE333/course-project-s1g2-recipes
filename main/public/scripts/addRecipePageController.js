@@ -113,15 +113,83 @@ class AddRecipePageController {
             let minutes = document.querySelector('#minutesV').value;
             let steps = document.querySelector('#stepsV').value;
             let image = document.querySelector('#imageV').value;
-            let time = hours + ":" + minutes + ":00";
             let user = rhit.auth.user.username;
+
+            //Validations
+            if (name == '' || serve == '' || hours == '' || minutes == '' || steps == '') {
+                alert('The following information cannot be left blank: Name, Servings, Hours, Minutes, and Steps');
+                return;
+            }
+
+            if (user == null) {
+                alert('Please sign in');
+                return;
+            }
+
+            if (hours != '') {
+                hours = Number.parseInt(hours);
+            }
+
+            if (minutes != '') {
+                minutes = Number.parseInt(minutes);
+            }
+
+            if (serve != '') {
+                serve = Number.parseInt(serve);
+            }
+
+            console.log("hours: " + hours);
+            console.log("minutes: " + minutes);
+            console.log("serve: " + serve);
+            // if (hours == NaN || minutes == NaN || serve == NaN) {
+            //     alert('Please make sure that Servings, Hours, and Minutes are numbers');
+            //     return;
+            // }
+
+            if ((hours != '' && hours % 1 != 0) || (minutes != '' && minutes % 1 != 0) || (serve != '' && serve % 1 != 0)) {
+                alert('Hours, Servings, and Minutes should be whole numbers');
+                return;
+            }
+
+            if ((serve != '' && serve < 0) || (minutes != '' && minutes < 0) || (hours != '' && hours < 0)) {
+                alert('Please make the Servings, Hours, and Minutes greater than or equal to 0');
+                return;
+            }
+
+            let catValues = [];
+            let ingValues = [];
+            let quanValues = [];
+            let costValues = [];
+            for (let i = 0; i < catSearch.length; i++) {
+                catValues[i] = document.querySelector('#' + catStrings[i]).value;
+                if (catValues[i] == '') {
+                    alert("Please don't leave any Categories blank");
+                    return;
+                }
+
+            }
+            for (let i = 0; i < ingIngStrings.length; i++) {
+                ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
+                quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
+                costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
+
+                if (ingValues[i] == '') {
+                    alert("Please assign each Ingredient a Name (you don't have to give them a Cost or Quantity)");
+                    return;
+                }
+                if (costValues[i] != '') {
+                    costValues[i] = Number.parseFloat(costValues[i]);
+                    console.log("costValues " + costValues[i]);
+                    if ((costValues[i] < 0 || isNaN(costValues[i]))) {
+                        alert("The cost of an Ingredient must be greater than or equal to 0");
+                        return;
+                    }
+                }
+            }
+
+
+            let time = hours + ":" + minutes + ":00";
             let obj = { nameV: name, diffV: diff, serveV: serve, timeV: time, stepsV: steps, imageV: image, userV: user };
-            document.querySelector('#nameV').value = '';
-            document.querySelector('#serveV').value = '';
-            document.querySelector('#hoursV').value = '';
-            document.querySelector('#minutesV').value = '';
-            document.querySelector('#stepsV').value = '';
-            document.querySelector('#imageV').value = '';
 
 
             fetch('/addSingleRecipe', {
@@ -133,31 +201,58 @@ class AddRecipePageController {
             }).then((res) => {
                 return res.json();
             }).then((data) => {
-
-                recipeID = data.value;
-                console.log("recipeId " + recipeID);
-
-                //Start adding categories and ingredients
-                let catValues = [];
-                let ingValues = [];
-                let quanValues = [];
-                let costValues = [];
-                for (let i = 0; i < catSearch.length; i++) {
-                    catValues[i] = document.querySelector('#' + catStrings[i]).value;
+                if (data.value < 0) {
+                    alert("This Recipe Name already exists");
+                    return;
                 }
-                for (let i = 0; i < ingIngStrings.length; i++) {
-                    ingValues[i] = document.querySelector('#' + ingIngStrings[i]).value;
-                    quanValues[i] = document.querySelector('#' + ingQuanStrings[i]).value;
-                    costValues[i] = document.querySelector('#' + ingCostStrings[i]).value;
+                else {
+                    recipeID = data.value;
+                    console.log("recipeId " + recipeID);
+
+                    //Start adding categories and ingredients
+
+                    let obj = { catV: catValues, ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
+                    fetch('/addCategoriesAndIngredients', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(obj),
+                    });
+
+                    document.querySelector('#nameV').value = '';
+                    document.querySelector('#serveV').value = '';
+                    document.querySelector('#hoursV').value = '';
+                    document.querySelector('#minutesV').value = '';
+                    document.querySelector('#stepsV').value = '';
+                    document.querySelector('#imageV').value = '';
+
+                    let ogCatIndex = catIndex;
+                    for (let i = 0; i < ogCatIndex; i++) {
+                        catSearch[0].remove();
+                        catRemove[0].remove();
+                        catSearch.splice(0, 1);
+                        catRemove.splice(0, 1);
+                        catStrings.splice(0, 1);
+                        catIndex--;
+                    }
+
+                    let ogIngIndex = ingIndex;
+                    for (let i = 0; i < ogIngIndex; i++) {
+                        ingSearch[0].remove();
+                        ingQuantities[0].remove();
+                        ingCosts[0].remove();
+                        ingRemove[0].remove();
+                        ingSearch.splice(0, 1);
+                        ingQuantities.splice(0, 1);
+                        ingCosts.splice(0, 1);
+                        ingRemove.splice(0, 1);
+                        ingIngStrings.splice(0, 1);
+                        ingQuanStrings.splice(0, 1);
+                        ingCostStrings.splice(0, 1);
+                        ingIndex--;
+                    }
                 }
-                let obj = { catV: catValues, ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
-                fetch('/addCategoriesAndIngredients', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(obj),
-                });
             });
         });
     }
