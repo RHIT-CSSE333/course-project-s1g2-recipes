@@ -81,8 +81,6 @@ app.post('/addSingleRecipe', (req, res) => {
     request.on('returnValue', function (parameterName, value, metadata) {
         inc++;
         if (inc == 2) {
-            console.log(value);
-            console.log("pogg");
             res.send({ value });
         }
     });
@@ -160,13 +158,12 @@ function ingHelper(catV, recipeIDV, ingV, quanV, costV) {
 
 // Function to add Reviews
 app.post('/AddReviews', (req, res) => {
-    console.log(req.body.name)
     let request = new Request('AddReviews', function (err) {
         if (err)
             console.log('Failed with error: ' + err);
     });
 
-    let stars = 3;
+    let stars = req.body.stars;
     let text = req.body.text;
     let id = req.body.id;
     let username = req.body.username;
@@ -177,9 +174,8 @@ app.post('/AddReviews', (req, res) => {
     request.addParameter('RecipeID', TYPES.Int, id);
     request.addParameter('PostUsername', TYPES.VarChar, username);
 
-
-    request.on('returnValue', function (parameterName, value, metadata) {
-        res.send({ value });
+    request.on('requestCompleted', function () {
+        res.send({ val: 0 });
     });
 
     connection.callProcedure(request);
@@ -274,7 +270,7 @@ app.get('/getUser', (req, res) => {
 // Function to get all recipes
 app.get('/getRecipes', (req, res) => {
     let recipes = [];
-    let request = new Request("select id, imageURL, [name], difficulty from recipe", function (err) {
+    let request = new Request("select id, imageURL, [name], difficulty, rating from RecipePreview", function (err) {
         if (err)
             console.log('Failed with error: ' + err);
     });
@@ -283,8 +279,8 @@ app.get('/getRecipes', (req, res) => {
         obj.id = columns[0].value;
         obj.imageURL = columns[1].value;
         obj.name = columns[2].value;
-        obj.rating = Math.floor(Math.random() * 5) + 1;
         obj.difficulty = columns[3].value;
+        obj.rating = columns[4].value;
         recipes.push(obj);
     });
     request.on('requestCompleted', function () {
@@ -297,23 +293,64 @@ app.get('/getRecipes', (req, res) => {
 app.post('/getRecipe', (req, res) => {
     let id = req.body.id;
     let obj = {};
-    let request = new Request(`select servings, difficulty, [name], createDate, imageURL, creatorusername, steps, [time] from recipe where id = ${id}`, function (err) {
+    let ingList = [];
+    let costList = [];
+    let quantityList = [];
+    let stars = [];
+    let request = new Request(`select 
+                                servings, difficulty, rname, createDate, imageURL, name, steps,
+                                [time], quantity, iName, cost, stars from RecipeHasIngredients where id = ${id}`, function (err) {
         if (err)
             console.log('Failed with error: ' + err);
     });
     request.on('row', function (columns) {
-        obj.servings = columns[0].value;
-        obj.difficulty = columns[1].value;
-        obj.name = columns[2].value;
-        obj.createDate = columns[3].value
-        obj.imageURL = columns[4].value;
-        obj.creatorusername = columns[5].value;
-        let steps = columns[6].value;
-        obj.steps = steps.substring(1, steps.length-1).split("', '");
-        obj.time = columns[7].value;
+        if(!obj.servings){
+            obj.servings = columns[0].value;
+            obj.difficulty = columns[1].value;
+            obj.name = columns[2].value;
+            obj.createDate = columns[3].value
+            obj.imageURL = columns[4].value;
+            obj.creatorname = columns[5].value;
+            let steps = columns[6].value;
+            obj.steps = steps.substring(1, steps.length-1).split("', '");
+            obj.time = columns[7].value;
+        }
+        if(ingList.indexOf(columns[9].value) == -1){
+            quantityList.push(columns[8].value);
+            ingList.push(columns[9].value);
+            costList.push(columns[10].value);
+        }
+        stars.push(columns[11].value);
     });
     request.on('requestCompleted', function () {
+        obj.quantities = quantityList;
+        obj.ings = ingList;
+        obj.costs = costList;
+        obj.stars = stars;
         res.send(obj);
+    });
+
+    connection.execSql(request);
+})
+
+// Function to get single recipe with an id
+app.post('/getReviews', (req, res) => {
+    let id = req.body.id;
+    let reviews = [];
+    let request = new Request(`select stars, timePosted, [Text], [Name] from UserReview where recipeId = ${id}`, function (err) {
+        if (err)
+            console.log('Failed with error: ' + err);
+    });
+    request.on('row', function (columns) {
+        let obj = {}
+        obj.stars = columns[0].value;
+        obj.timePosted = columns[1].value;
+        obj.text = columns[2].value;
+        obj.name = columns[3].value ? columns[3].value:'Anonymous';
+        reviews.push(obj);
+    });
+    request.on('requestCompleted', function () {
+        res.send({'reviews': reviews});
     });
 
     connection.execSql(request);

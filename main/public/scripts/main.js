@@ -31,6 +31,7 @@ rhit.NavController = class{
         if(rhit.auth.user.name){
             accDrop.innerHTML += '<a href="createRecipe.html">My Recipes</a>';
             accDrop.innerHTML += '<a onclick="rhit.auth.signOut()">Sign Out</a>';
+            accBtn.innerHTML = '<p id="pfp">'+rhit.auth.user.name.substring(0,1).toUpperCase()+'</p>';
         }
         else{
             accDrop.innerHTML += '<a href="login.html">Log In</a>';
@@ -45,9 +46,6 @@ rhit.NavController = class{
 
 rhit.HomePageController = class{
     constructor(){
-        if(rhit.auth.user.name != null){
-            document.querySelector('#accountContainer').innerHTML = '<p id="pfp">'+rhit.auth.user.name.substring(0,1).toUpperCase()+'</p>';
-        }
     }
 }
 
@@ -67,6 +65,7 @@ rhit.initializePage = function() {
         console.log("addRecipe");
         rhit.AddRecipePageController = AddRecipePageController;
         new rhit.AddRecipePageController();
+        new rhit.NavController();
     }
     if(document.querySelector('#allRecipesPage')){
         console.log("all recipes");

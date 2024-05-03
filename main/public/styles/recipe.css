@@ -90,6 +90,7 @@ li::marker{
     float: right;
     font-size: 28px;
     font-weight: bold;
+    align-self: flex-end;
   }
   
   .close:hover,
@@ -107,5 +108,75 @@ li::marker{
 }
 
 .fa-star.checked {
-    color: gold;
+    color: orange;
+}
+
+.modal-content{
+    margin: 10vh auto;
+    padding: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#post{
+    margin: 5vh 0;
+    background-color: white;
+    border: 1px solid #41B06E;
+    color: #41B06E;
+    padding: 1em;
+    font-size: 1.5em;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#post:hover{
+    background-color: #41B06E;
+    color: white;
+}
+
+#modalBtn{
+    margin: 10vh;
+    background-color: white;
+    border: 1px solid #41B06E;
+    color: #41B06E;
+    padding: 1em;
+    font-size: 1.5em;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#modalBtn:hover{
+    background-color: #41B06E;
+    color: white;
+}
+
+.reviewCard{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid gray;
+    padding: 5vh 0;
+    width: 50%;
+}
+
+.reviewHead{
+    display: flex;
+    align-items: center;
+}
+
+.reviewHead p{
+    margin: 1em;
+}
+
+.revName{
+    font-size: 1.5em;
+}
+
+.reviewStars{
+    display: flex;
+    align-items: center;
+}
+
+.revDate{
+    margin-left: 2em;
 }
