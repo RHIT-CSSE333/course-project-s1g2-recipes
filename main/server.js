@@ -226,20 +226,21 @@ app.post('/login', (req, res) => {
     let salt = null;
     let hash = null;
     let name = null;
-    let request = new Request("select passwordHash, passwordSalt, [name] from [user] where username = '" + username + "'", function (err) {
+    let request = new Request('GetUser', function (err) {
         if (err)
             console.log('Failed with error: ' + err);
     });
+    request.addParameter('Username', TYPES.VarChar, username);
+    request.addOutputParameter('RetVal', TYPES.Int);
+
     request.on('row', function (columns) {
         hash = columns[0].value;
         salt = columns[1].value;
         name = columns[2].value;
     });
 
-    request.on('requestCompleted', function () {
-        if (hash == null)
-            res.send({ val: 1 });
-        else {
+    request.on('returnValue', function (parameterName, value, metadata) {
+        if (hash != null){
             let localHash = userService.hashPassword(pass + salt);
             if (localHash == hash) {
                 console.log('Logged In!');
@@ -254,9 +255,11 @@ app.post('/login', (req, res) => {
                 res.send({ val: 2 });
             }
         }
+        else
+            res.send({ val: 1 });
     });
 
-    connection.execSql(request);
+    connection.callProcedure(request);
 })
 
 app.get('/logout', (req, res) => {
@@ -274,7 +277,7 @@ app.get('/getUser', (req, res) => {
 // Function to get all recipes
 app.get('/getRecipes', (req, res) => {
     let recipes = [];
-    let request = new Request("select id, imageURL, [name], difficulty, rating from RecipePreview", function (err) {
+    let request = new Request("GetRecipes", function (err) {
         if (err)
             console.log('Failed with error: ' + err);
     });
@@ -290,7 +293,7 @@ app.get('/getRecipes', (req, res) => {
     request.on('requestCompleted', function () {
         res.send({ 'recipes': recipes });
     });
-    connection.execSql(request);
+    connection.callProcedure(request);
 })
 
 // Function to get single recipe with an id
@@ -301,12 +304,13 @@ app.post('/getRecipe', (req, res) => {
     let costList = [];
     let quantityList = [];
     let stars = [];
-    let request = new Request(`select 
-                                servings, difficulty, rname, createDate, imageURL, name, steps,
-                                [time], quantity, iName, cost, stars from RecipeHasIngredients where id = ${id}`, function (err) {
+    let request = new Request('GetSingleRecipe', function (err) {
         if (err)
             console.log('Failed with error: ' + err);
     });
+
+    request.addParameter('id', TYPES.VarChar, id);
+
     request.on('row', function (columns) {
         if(!obj.servings){
             obj.servings = columns[0].value;
@@ -334,17 +338,20 @@ app.post('/getRecipe', (req, res) => {
         res.send(obj);
     });
 
-    connection.execSql(request);
+    connection.callProcedure(request);
 })
 
 // Function to get single recipe with an id
 app.post('/getReviews', (req, res) => {
     let id = req.body.id;
     let reviews = [];
-    let request = new Request(`select stars, timePosted, [Text], [Name] from UserReview where recipeId = ${id}`, function (err) {
+    let request = new Request('GetReviews', function (err) {
         if (err)
             console.log('Failed with error: ' + err);
     });
+
+    request.addParameter('id', TYPES.VarChar, id);
+
     request.on('row', function (columns) {
         let obj = {}
         obj.stars = columns[0].value;
@@ -357,7 +364,7 @@ app.post('/getReviews', (req, res) => {
         res.send({'reviews': reviews});
     });
 
-    connection.execSql(request);
+    connection.callProcedure(request);
 })
 
 app.listen(3000, () => {
