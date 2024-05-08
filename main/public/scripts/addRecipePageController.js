@@ -101,6 +101,8 @@ class AddRecipePageController {
             ingIndex++;
         });
 
+
+
         //Save Recipes Button
         let recipeID;
         let saveBtn = document.querySelector('#saveRecipeButton');
@@ -113,6 +115,11 @@ class AddRecipePageController {
             let minutes = document.querySelector('#minutesV').value;
             let steps = document.querySelector('#stepsV').value;
             let image = document.querySelector('#imageV').value;
+            //Nutritional Info
+            let cal = document.querySelector('#calV').value;
+            let protein = document.querySelector('#proteinV').value;
+            let fat = document.querySelector('#fatV').value;
+            let carb = document.querySelector('#carbV').value;
             let user = rhit.auth.user.username;
 
             //Validations
@@ -137,22 +144,46 @@ class AddRecipePageController {
             if (serve != '') {
                 serve = Number.parseInt(serve);
             }
+            console.log("cal: " + cal);
+            console.log("protein: " + protein);
+            console.log("fat: " + fat);
+            console.log("carb " + carb);
+
+            if (cal != '') {
+                cal = Number.parseInt(cal);
+            }
+
+            if (protein != '') {
+                protein = Number.parseInt(protein);
+            }
+
+            if (fat != '') {
+                fat = Number.parseInt(fat);
+            }
+
+            if (carb != '') {
+                carb = Number.parseInt(carb);
+            }
 
             console.log("hours: " + hours);
             console.log("minutes: " + minutes);
             console.log("serve: " + serve);
+            console.log("cal: " + cal);
+            console.log("protein: " + protein);
+            console.log("fat: " + fat);
+            console.log("carb " + carb);
             // if (hours == NaN || minutes == NaN || serve == NaN) {
             //     alert('Please make sure that Servings, Hours, and Minutes are numbers');
             //     return;
             // }
 
-            if ((hours != '' && hours % 1 != 0) || (minutes != '' && minutes % 1 != 0) || (serve != '' && serve % 1 != 0)) {
-                alert('Hours, Servings, and Minutes should be whole numbers');
+            if ((hours != '' && hours % 1 != 0) || (minutes != '' && minutes % 1 != 0) || (serve != '' && serve % 1 != 0) || (cal != '' && cal % 1 != 0) || (protein != '' && protein % 1 != 0) || (fat != '' && fat % 1 != 0) || (carb != '' && carb % 1 != 0)) {
+                alert('Hours, Servings, Minutes, Calories, Protein, Fat, and Carbs should be whole numbers (Calories, Protein, Fat, and Carbs are optional)');
                 return;
             }
 
-            if ((serve != '' && serve < 0) || (minutes != '' && minutes < 0) || (hours != '' && hours < 0)) {
-                alert('Please make the Servings, Hours, and Minutes greater than or equal to 0');
+            if ((serve != '' && serve < 0) || (minutes != '' && minutes < 0) || (hours != '' && hours < 0) || (cal != '' && cal < 0) || (protein != '' && protein < 0) || (fat != '' && fat < 0) || (carb != '' && carb < 0)) {
+                alert('Please make the Servings, Hours, and Minutes, Calories, Protein, Fat, and Carbs are greater than or equal to 0 (Calories, Protein, Fat, and Carbs are optional)');
                 return;
             }
 
@@ -211,7 +242,7 @@ class AddRecipePageController {
 
                     //Start adding categories and ingredients
 
-                    let obj = { catV: catValues, ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID };
+                    let obj = { catV: catValues, ingV: ingValues, quanV: quanValues, costV: costValues, recipeIDV: recipeID, calV: cal, proteinV: protein, fatV: fat, carbV: carb };
                     fetch('/addCategoriesAndIngredients', {
                         method: 'POST',
                         headers: {
@@ -226,6 +257,10 @@ class AddRecipePageController {
                     document.querySelector('#minutesV').value = '';
                     document.querySelector('#stepsV').value = '';
                     document.querySelector('#imageV').value = '';
+                    document.querySelector('#calV').value = '';
+                    document.querySelector('#proteinV').value = '';
+                    document.querySelector('#fatV').value = '';
+                    document.querySelector('#carbV').value = '';
 
                     let ogCatIndex = catIndex;
                     for (let i = 0; i < ogCatIndex; i++) {

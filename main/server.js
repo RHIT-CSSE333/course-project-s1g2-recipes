@@ -99,13 +99,16 @@ app.post('/addCategoriesAndIngredients', (req, res) => {
     let ingV = req.body.ingV;
     let quanV = req.body.quanV;
     let costV = req.body.costV;
-    console.log("ingV: " + ingV);
-    catHelper(catV, recipeIDV, ingV, quanV, costV);
+    let calV = req.body.calV;
+    let proteinV = req.body.proteinV;
+    let fatV = req.body.fatV;
+    let carbV = req.body.carbV;
+    catHelper(catV, recipeIDV, ingV, quanV, costV, calV, proteinV, fatV, carbV);
 });
 
-function catHelper(catV, recipeIDV, ingV, quanV, costV) {
+function catHelper(catV, recipeIDV, ingV, quanV, costV, calV, proteinV, fatV, carbV) {
     if (catV.length == 0) {
-        ingHelper(catV, recipeIDV, ingV, quanV, costV);
+        ingHelper(catV, recipeIDV, ingV, quanV, costV, calV, proteinV, fatV, carbV);
         return;
     }
     let request = new Request('AddCategory', function (err) {
@@ -119,13 +122,14 @@ function catHelper(catV, recipeIDV, ingV, quanV, costV) {
     request.addParameter('RecipeID', TYPES.Int, recipeIDV);
     request.on('requestCompleted', function () {
         catV.pop();
-        catHelper(catV, recipeIDV, ingV, quanV, costV);
+        catHelper(catV, recipeIDV, ingV, quanV, costV, calV, proteinV, fatV, carbV);
     });
     connection.callProcedure(request);
 }
 
-function ingHelper(catV, recipeIDV, ingV, quanV, costV) {
+function ingHelper(catV, recipeIDV, ingV, quanV, costV, calV, proteinV, fatV, carbV) {
     if (ingV.length == 0) {
+        nutrtionHelper(catV, recipeIDV, ingV, quanV, costV, calV, proteinV, fatV, carbV);
         return;
     }
     let request = new Request('AddIngredient', function (err) {
@@ -155,7 +159,45 @@ function ingHelper(catV, recipeIDV, ingV, quanV, costV) {
         ingV.pop();
         quanV.pop();
         costV.pop();
-        ingHelper(catV, recipeIDV, ingV, quanV, costV);
+        ingHelper(catV, recipeIDV, ingV, quanV, costV, calV, proteinV, fatV, carbV);
+    });
+    connection.callProcedure(request);
+}
+
+function nutrtionHelper(catV, recipeIDV, ingV, quanV, costV, calV, proteinV, fatV, carbV) {
+    let request = new Request('AddNutritionalInfo', function (err) {
+        if (err) {
+            console.log('Failed with error: ' + err);
+        }
+    });
+    console.log("trying to add nutritionalinfo: cal " + calV + "protein "  + proteinV + "fat: " + fatV + "carb " + carbV);
+    request.addParameter('RecipeID', TYPES.Int, recipeIDV);
+    if (calV == '') {
+        request.addParameter('Calories', TYPES.Int, null);
+    }
+    else {
+        request.addParameter('Calories', TYPES.Int, calV);
+    }
+    if (proteinV == '') {
+        request.addParameter('Protein', TYPES.Int, null);
+    }
+    else {
+        request.addParameter('Protein', TYPES.Int, proteinV);
+    }
+    if (fatV == '') {
+        request.addParameter('Fats', TYPES.Int, null);
+    }
+    else {
+        request.addParameter('Fats', TYPES.Int, fatV);
+    }
+    if (carbV == '') {
+        request.addParameter('Carbs', TYPES.Int, null);
+    }
+    else {
+        request.addParameter('Carbs', TYPES.Int, carbV);
+    }
+    request.on('requestCompleted', function () {
+        return;
     });
     connection.callProcedure(request);
 }
