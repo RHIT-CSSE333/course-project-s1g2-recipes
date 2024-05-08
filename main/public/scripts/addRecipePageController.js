@@ -21,14 +21,32 @@ class AddRecipePageController {
         let catStrings = [];
         let catIndex = 0;
         let catInc = 0;
+        let catDlStrings = [];
+
+        //Categories Display Existing
+
+        // fetch('/showExistingCategories', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(obj),
+        // }).then((res) => {
+        //     return res.json();
+        // }).then((data) => {
+        //     catExisting = data;
+        //     });
+
         //Add Categories Button
         let addCatBtn = document.querySelector('#addCategoryButton');
         addCatBtn.addEventListener("click", function () {
+            let catExisting = [];
             console.log("Add Category Button");
             catStrings[catIndex] = 'catBtnV' + catInc;
+            catDlStrings[catIndex] = 'catDlV' + catInc;
             catInc++;
             catSearch[catIndex] = document.createElement('div');
-            catSearch[catIndex].innerHTML = '<input id = ' + catStrings[catIndex] + ' type="text" placeholder="Search...">';
+            catSearch[catIndex].innerHTML = '<input id = ' + catStrings[catIndex] + ' list=' + catDlStrings[catIndex] + ' type="text" placeholder="Search..."><datalist id=' + catDlStrings[catIndex] + '>';
             catSearch[catIndex].style = "display:inline";
             catRemove[catIndex] = document.createElement('button');
             catRemove[catIndex].innerHTML = 'Remove Category';
@@ -44,8 +62,29 @@ class AddRecipePageController {
                 catIndex--;
             });
             document.querySelector('#categoryList').append(catSearch[catIndex], catRemove[catIndex], document.createElement('p'));
-            // document.querySelector('#categoryList').append(catRemove[catIndex]);
+            let cIndex = 1;
+            let obj = { catExistingV: catExisting, indexV: cIndex};
             catIndex++;
+
+            fetch('/showExistingCategories', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(obj),
+            }).then((res) => {
+                return res.json();
+            }).then((data) => {
+                catExisting = data.catExistingV;
+                console.log("catExisting " + catExisting);
+                let stringBuilderCat = '';
+                for (let i = 0; i < catExisting.length; i++) {
+                    stringBuilderCat += '<option value=' + catExisting[i].name + '>';
+                }
+                let tempInnerCat = document.querySelector('#' + catDlStrings[catIndex-1]);
+                tempInnerCat.innerHTML = stringBuilderCat;
+                console.log(catSearch[catIndex]);
+            });
         });
 
         //Ingredients

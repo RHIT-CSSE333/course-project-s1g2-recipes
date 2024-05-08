@@ -91,6 +91,24 @@ app.post('/addSingleRecipe', (req, res) => {
     connection.callProcedure(request);
 });
 
+//Function to show existing categories
+app.post('/showExistingCategories', (req, res) => {
+    let catExistingV = [];
+    let request = new Request('GetCategoryName', function (err) {
+        if (err) {
+            console.log('Failed with error: ' + err);
+        }
+    });
+    request.on('row', function (columns) {
+        let obj = {};
+        obj.name = columns[0].value;
+        catExistingV.push(obj);
+    });
+    request.on('requestCompleted', function () {
+        res.send({ 'catExistingV': catExistingV});
+    });
+    connection.callProcedure(request);
+});
 
 //Function to add categories
 app.post('/addCategoriesAndIngredients', (req, res) => {
