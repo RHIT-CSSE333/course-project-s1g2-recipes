@@ -338,6 +338,28 @@ app.get('/getRecipes', (req, res) => {
     connection.callProcedure(request);
 })
 
+// Function to get all recipes
+app.get('/getMyRecipes', (req, res) => {
+    let recipes = [];
+    let request = new Request("GetMyRecipes", function (err) {
+        if (err)
+            console.log('Failed with error: ' + err);
+    });
+    request.on('row', function (columns) {
+        let obj = {};
+        obj.id = columns[0].value;
+        obj.imageURL = columns[1].value;
+        obj.name = columns[2].value;
+        obj.difficulty = columns[3].value;
+        obj.rating = columns[4].value;
+        recipes.push(obj);
+    });
+    request.on('requestCompleted', function () {
+        res.send({ 'recipes': recipes });
+    });
+    connection.callProcedure(request);
+})
+
 // Function to get single recipe with an id
 app.post('/getRecipe', (req, res) => {
     let id = req.body.id;
