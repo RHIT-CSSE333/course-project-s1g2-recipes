@@ -356,13 +356,14 @@ app.get('/getRecipes', (req, res) => {
     connection.callProcedure(request);
 })
 
-// Function to get all recipes
+// Function to get recipes for the logged in user
 app.get('/getMyRecipes', (req, res) => {
     let recipes = [];
     let request = new Request("GetMyRecipes", function (err) {
         if (err)
             console.log('Failed with error: ' + err);
     });
+    request.addParameter('username', TYPES.VarChar, user.username);
     request.on('row', function (columns) {
         let obj = {};
         obj.id = columns[0].value;
@@ -418,6 +419,22 @@ app.post('/getRecipe', (req, res) => {
         obj.costs = costList;
         obj.stars = stars;
         res.send(obj);
+    });
+
+    connection.callProcedure(request);
+})
+
+// Function to get single recipe with an id
+app.post('/deleteRecipe', (req, res) => {
+    let id = req.body.id;
+    let request = new Request('DeleteRecipe', function (err) {
+        if (err)
+            console.log('Failed with error: ' + err);
+    });
+
+    request.addParameter('id', TYPES.Int, id);
+    request.on('requestCompleted', function () {
+        res.send({val:0});
     });
 
     connection.callProcedure(request);

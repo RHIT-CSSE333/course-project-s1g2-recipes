@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="icon" type="image/x-icon" href="images/favicon.png">
+
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/addRecipe.css">
+
+  <title>Flavorly</title>
+</head>
+<body>
+  <nav>
+    <img class="icon" src="images/logo.png" onclick="location.href='index.html'">
+    <a href="index.html"><button class="navButton">Home<p></p></button></a>
+    <a href="AddIngredient.html"><button class="navButton">About<p></p></button></a>
+    <a href="allRecipes.html"><button class="navButton">Recipes<p></p></button></a>
+    <div id="searchbar">
+        <input id="navSearch" type="text" placeholder="Search...">
+        <button id="searchButton"><span class="material-symbols-outlined">search</span></button>
+    </div>
+    <a id="accountContainer"><img id="accountIcon" src="images/account.png"></a>
+    <div id="accountDropdown" class="dropdown-content"></div>
+</nav>
+  <div id="createRecipePage">
+    <h2>Create Recipe</h2>
+    <h3 style="display:inline">Name: </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="nameV" type="text" placeholder="Search...">
+    </div>
+    <p></p>
+    <h3 style="display:inline">Difficulty: </h3>
+    <div id="diffValue", style="display:inline"></div>
+    <p></p>
+    <h3 style="display:inline">Servings: </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="serveV" type="text" placeholder="Search...">
+    </div>
+    <p></p>
+    <h3 style="display:inline">Hours: </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="hoursV" type="text" placeholder="Hours...">
+    </div>
+    <h3 style="display:inline">Minutes: </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="minutesV" type="text" placeholder="Minutes...">
+    </div>
+    <p></p>
+    <h3 style="display:inline">Steps: </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="stepsV" type="text" placeholder="Search...">
+    </div>
+    <p></p>
+    <h3 style="display:inline">ImageURL (Optional): </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="imageV" type="text" placeholder="Search...">
+    </div>
+    <p></p>
+    <h3 style="display:inline">Categories (Optional): </h3>
+    <button id="addCategoryButton", style="display:inline">Add Category</button>
+    <p></p>
+    <ol id="categoryList"></ol>
+    <p></p>
+    <h3 style="display:inline">Ingredients: </h3>
+    <button id="addIngredientButton", style="display:inline">Add Ingredient</button>
+    <p></p>
+    <ol id="ingredientList"></ol>
+    <p></p>
+    <h3 style="display:inline">Calories (Optional): </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="calV" type="text" placeholder="Calories...">
+    </div>
+    <h3 style="display:inline">Protein (Optional): </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="proteinV" type="text" placeholder="Protein...">
+    </div>
+    <p></p>
+    <h3 style="display:inline">Fats (Optional): </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="fatV" type="text" placeholder="Calories...">
+    </div>
+    <h3 style="display:inline">Carbs (Optional): </h3>
+    <div class="searchbar" style="display:inline">
+      <input id="carbV" type="text" placeholder="Protein...">
+    </div>
+    <p></p>
+    <button id="saveRecipeButton">Save Recipe</button>
+  </div>
+</body>
+
+<script src="scripts/editRecipePageController.js"></script>
+<script src="scripts/main.js"></script>
+
+</html>

@@ -3,6 +3,11 @@
     flex-direction: column;
 }
 
+#myRecipesPage{
+    display: flex;
+    flex-direction: column;
+}
+
 #recipesContainer{
     display: grid;
     margin: 0 5vh;
@@ -24,4 +29,50 @@
     margin: 30vh;
     width: 10%;
     height: 10%;
+}
+
+.recipeBtn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #41B06E;
+    margin-top: 2vh;
+}
+
+.recipeBtn:hover{
+    background-color: #41B06E;
+    color: black;
+    padding: 1em;
+    cursor: pointer;
+}
+
+#meme{
+    display: none;
+    align-self: center;
+    justify-self: center;
+    margin: 10vh;
+}
+
+#fab{
+    position: sticky;
+    left: 80vw;
+    top: 80vh;
+    height: 10vh;
+    width: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5em;
+    text-decoration: none;
+    border-radius: 50%;
+    transition-duration: .2s;
+    background-color: #41B06E;
+    color: white;
+    margin: 0;
+    z-index: 99;
+}
+
+#fab:hover{
+    border-radius: 0;
+    scale: 1.2;
 }
