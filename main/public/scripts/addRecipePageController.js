@@ -63,7 +63,7 @@ class AddRecipePageController {
             });
             document.querySelector('#categoryList').append(catSearch[catIndex], catRemove[catIndex], document.createElement('p'));
             let cIndex = 1;
-            let obj = { catExistingV: catExisting, indexV: cIndex};
+            let obj = { catExistingV: catExisting, indexV: cIndex };
             catIndex++;
 
             fetch('/showExistingCategories', {
@@ -81,7 +81,7 @@ class AddRecipePageController {
                 for (let i = 0; i < catExisting.length; i++) {
                     stringBuilderCat += '<option value=' + catExisting[i].name + '>';
                 }
-                let tempInnerCat = document.querySelector('#' + catDlStrings[catIndex-1]);
+                let tempInnerCat = document.querySelector('#' + catDlStrings[catIndex - 1]);
                 tempInnerCat.innerHTML = stringBuilderCat;
                 console.log(catSearch[catIndex]);
             });
@@ -90,6 +90,7 @@ class AddRecipePageController {
         //Ingredients
         let ingSearch = [];
         let ingRemove = [];
+        let ingDlStrings = [];
         let ingIngStrings = [];
         let ingQuantities = [];
         let ingQuanStrings = [];
@@ -99,14 +100,21 @@ class AddRecipePageController {
         let ingInc = 0;
         //Add Ingredients Button
         let addIngBtn = document.querySelector('#addIngredientButton');
+        let ingExisting = [];
+
         addIngBtn.addEventListener("click", function () {
             console.log("Add Ingredient Button");
             ingIngStrings[ingIndex] = 'ingBtnV' + ingInc;
             ingQuanStrings[ingIndex] = 'quanBtnV' + ingInc;
             ingCostStrings[ingIndex] = 'costBtnV' + ingInc;
+            ingDlStrings[ingIndex] = 'ingDlV' + ingInc;
+
             ingInc++;
             ingSearch[ingIndex] = document.createElement('div');
             ingSearch[ingIndex].innerHTML = '<input id = ' + ingIngStrings[ingIndex] + ' type="text" placeholder="Ingredient">';
+
+            ingSearch[ingIndex].innerHTML = '<input id = ' + ingIngStrings[ingIndex] + ' list=' + ingDlStrings[ingIndex] + ' type="text" placeholder="Search..."><datalist id=' + ingDlStrings[ingIndex] + '>';
+
             ingSearch[ingIndex].style = "display:inline";
 
             ingQuantities[ingIndex] = document.createElement('div');
@@ -138,6 +146,30 @@ class AddRecipePageController {
             });
             document.querySelector('#ingredientList').append(ingSearch[ingIndex], ingQuantities[ingIndex], ingCosts[ingIndex], ingRemove[ingIndex], document.createElement('p'));
             ingIndex++;
+
+            let iIndex = 1;
+            let obj = { ingExistingV: ingExisting, indexV: iIndex };
+            // ingIndex++;
+
+            fetch('/showExistingIngredient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(obj),
+            }).then((res) => {
+                return res.json();
+            }).then((data) => {
+                ingExisting = data.ingExistingV;
+                console.log("ingExisting " + ingExisting);
+                let stringBuildering = '';
+                for (let i = 0; i < ingExisting.length; i++) {
+                    stringBuildering += '<option value=' + ingExisting[i].name + '>';
+                }
+                let tempInnering = document.querySelector('#' + ingDlStrings[ingIndex - 1]);
+                tempInnering.innerHTML = stringBuildering;
+                console.log(ingSearch[ingIndex]);
+            });
         });
 
 
