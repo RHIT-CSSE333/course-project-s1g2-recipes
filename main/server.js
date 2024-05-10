@@ -110,6 +110,28 @@ app.post('/showExistingCategories', (req, res) => {
     connection.callProcedure(request);
 });
 
+//Function to show existing Ingredient
+app.post('/showExistingIngredient', (req, res) => {
+    console.log("meow");
+    let ingExistingV = [];
+    let request = new Request('GetIngredientName', function (err) {
+        if (err) {
+            console.log('Failed with error: ' + err);
+        }
+    });
+    request.on('row', function (columns) {
+        let obj = {};
+        obj.name = columns[0].value;
+        ingExistingV.push(obj);
+    });
+    request.on('requestCompleted', function () {
+        res.send({ 'ingExistingV': ingExistingV});
+    });
+    connection.callProcedure(request);
+});
+
+
+
 //Function to add categories
 app.post('/addCategoriesAndIngredients', (req, res) => {
     let catV = req.body.catV;
