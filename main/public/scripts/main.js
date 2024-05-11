@@ -41,6 +41,9 @@ rhit.NavController = class{
         accBtn.addEventListener('click', () => {
            accDrop.classList.toggle("show");
         });
+        searchBtn.addEventListener('click', () => {
+            location.href = `allRecipes.html?query=${navSearch.value}`;
+        })
     }
 }
 
@@ -65,6 +68,13 @@ rhit.initializePage = function() {
         console.log("addRecipe");
         rhit.AddRecipePageController = AddRecipePageController;
         new rhit.AddRecipePageController();
+        new rhit.NavController();
+    }
+    if(document.querySelector("#editRecipePage")) {
+        console.log("editRecipe");
+        const urlParams = new URLSearchParams(window.location.search);
+        rhit.EditRecipePageController = EditRecipePageController;
+        new rhit.EditRecipePageController(urlParams.get("id"));
         new rhit.NavController();
     }
     if(document.querySelector('#allRecipesPage')){

@@ -112,7 +112,6 @@ app.post('/showExistingCategories', (req, res) => {
 
 //Function to show existing Ingredient
 app.post('/showExistingIngredient', (req, res) => {
-    console.log("meow");
     let ingExistingV = [];
     let request = new Request('GetIngredientName', function (err) {
         if (err) {
@@ -183,12 +182,9 @@ function ingHelper(catV, recipeIDV, ingV, quanV, costV, calV, proteinV, fatV, ca
     console.log("trying to add ingredient: " + ingSingle + " with quan: " + quanSingle + " with cost: " + costSingle);
     request.addParameter('Name', TYPES.VarChar, ingSingle);
     request.addParameter('RecipeID', TYPES.Int, recipeIDV);
-    if (quanSingle == '') {
-        request.addParameter('Quantity', TYPES.VarChar, null);
-    }
-    else {
-        request.addParameter('Quantity', TYPES.Int, quanSingle);
-    }
+
+    request.addParameter('Quantity', TYPES.VarChar, quanSingle==''?null:quanSingle);
+
     if (costSingle == '') {
         request.addParameter('Cost', TYPES.Money, null);
     }
@@ -408,6 +404,7 @@ app.post('/getRecipe', (req, res) => {
     let ingList = [];
     let costList = [];
     let quantityList = [];
+    let catList = [];
     let stars = [];
     let request = new Request('GetSingleRecipe', function (err) {
         if (err)
@@ -427,12 +424,18 @@ app.post('/getRecipe', (req, res) => {
             let steps = columns[6].value;
             obj.steps = steps.substring(1, steps.length-1).split("', '");
             obj.time = columns[7].value;
+            obj.calories = columns[12].value;
+            obj.protein = columns[13].value;
+            obj.fats = columns[14].value;
+            obj.carbs = columns[15].value;
         }
         if(ingList.indexOf(columns[9].value) == -1){
             quantityList.push(columns[8].value);
             ingList.push(columns[9].value);
             costList.push(columns[10].value);
         }
+        if(catList.indexOf(columns[16] == -1))
+            catList.push(columns[16].value);
         stars.push(columns[11].value);
     });
     request.on('requestCompleted', function () {
@@ -440,6 +443,7 @@ app.post('/getRecipe', (req, res) => {
         obj.ings = ingList;
         obj.costs = costList;
         obj.stars = stars;
+        obj.cats = catList;
         res.send(obj);
     });
 
