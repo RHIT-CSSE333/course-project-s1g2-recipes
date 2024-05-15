@@ -23,20 +23,6 @@ class AddRecipePageController {
         let catInc = 0;
         let catDlStrings = [];
 
-        //Categories Display Existing
-
-        // fetch('/showExistingCategories', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(obj),
-        // }).then((res) => {
-        //     return res.json();
-        // }).then((data) => {
-        //     catExisting = data;
-        //     });
-
         //Add Categories Button
         let addCatBtn = document.querySelector('#addCategoryButton');
         addCatBtn.addEventListener("click", function () {
@@ -85,6 +71,42 @@ class AddRecipePageController {
                 tempInnerCat.innerHTML = stringBuilderCat;
                 console.log(catSearch[catIndex]);
             });
+        });
+
+        //Steps
+        let stepSearch = [];
+        let stepRemove = [];
+        let stepStrings = [];
+        let stepIndex = 0;
+        let stepInc = 0;
+        let stepDlStrings = [];
+
+        //Add Steps Button
+        let addStepBtn = document.querySelector('#addStepButton');
+        addStepBtn.addEventListener("click", function () {
+            let stepExisting = [];
+            console.log("Add Step Button");
+            stepStrings[stepIndex] = 'stepBtnV' + stepInc;
+            stepDlStrings[stepIndex] = 'stepDlV' + stepInc;
+            stepInc++;
+            stepSearch[stepIndex] = document.createElement('div');
+            stepSearch[stepIndex].innerHTML = '<input id = ' + stepStrings[stepIndex] + ' list=' + stepDlStrings[stepIndex] + ' type="text" placeholder="Search..."><datalist id=' + stepDlStrings[stepIndex] + '>';
+            stepSearch[stepIndex].style = "display:inline";
+            stepRemove[stepIndex] = document.createElement('button');
+            stepRemove[stepIndex].innerHTML = 'Remove Step';
+            stepRemove[stepIndex].addEventListener("click", function () {
+                console.log("Remove button");
+                console.log(stepRemove.indexOf(this))
+                let index = stepRemove.indexOf(this);
+                stepSearch[index].remove();
+                stepRemove[index].remove();
+                stepSearch.splice(index, 1);
+                stepRemove.splice(index, 1);
+                stepStrings.splice(index, 1);
+                stepIndex--;
+            });
+            document.querySelector('#stepList').append(stepSearch[stepIndex], stepRemove[stepIndex], document.createElement('p'));
+            stepIndex++;
         });
 
         //Ingredients
@@ -184,7 +206,6 @@ class AddRecipePageController {
             let serve = document.querySelector('#serveV').value;
             let hours = document.querySelector('#hoursV').value;
             let minutes = document.querySelector('#minutesV').value;
-            let steps = document.querySelector('#stepsV').value;
             let image = document.querySelector('#imageV').value;
             //Nutritional Info
             let cal = document.querySelector('#calV').value;
@@ -193,15 +214,29 @@ class AddRecipePageController {
             let carb = document.querySelector('#carbV').value;
             let user = rhit.auth.user.username;
 
+            //Steps
+            let stepValue = '';
+            for (let i = 0; i < stepSearch.length; i++) {
+                console.log("step " + i + ": " + document.querySelector('#' + stepStrings[i]).value);
+                stepValue += "'" + document.querySelector('#' + stepStrings[i]).value + "'";
+                if (i != stepSearch.length - 1) {
+                    stepValue += ', ';
+                }
+            }
+
             //Validations
-            if (name == '' || serve == '' || hours == '' || minutes == '' || steps == '') {
-                alert('The following information cannot be left blank: Name, Servings, Hours, Minutes, and Steps');
+            if (name == '' || serve == '' || hours == '' || minutes == '') {
+                alert('The following information cannot be left blank: Name, Servings, Hours and Minutes');
                 return;
             }
 
             if (user == null) {
                 alert('Please sign in');
                 return;
+            }
+
+            if (stepValue == '') {
+                stepValue = null;
             }
 
             if (hours != '') {
@@ -243,10 +278,7 @@ class AddRecipePageController {
             console.log("protein: " + protein);
             console.log("fat: " + fat);
             console.log("carb " + carb);
-            // if (hours == NaN || minutes == NaN || serve == NaN) {
-            //     alert('Please make sure that Servings, Hours, and Minutes are numbers');
-            //     return;
-            // }
+            console.log("steps: " + stepValue);
 
             if ((hours != '' && hours % 1 != 0) || (minutes != '' && minutes % 1 != 0) || (serve != '' && serve % 1 != 0) || (cal != '' && cal % 1 != 0) || (protein != '' && protein % 1 != 0) || (fat != '' && fat % 1 != 0) || (carb != '' && carb % 1 != 0)) {
                 alert('Hours, Servings, Minutes, Calories, Protein, Fat, and Carbs should be whole numbers (Calories, Protein, Fat, and Carbs are optional)');
@@ -291,7 +323,7 @@ class AddRecipePageController {
 
 
             let time = hours + ":" + minutes + ":00";
-            let obj = { nameV: name, diffV: diff, serveV: serve, timeV: time, stepsV: steps, imageV: image, userV: user };
+            let obj = { nameV: name, diffV: diff, serveV: serve, timeV: time, stepsV: stepValue, imageV: image, userV: user };
 
 
             fetch('/addSingleRecipe', {
@@ -326,7 +358,6 @@ class AddRecipePageController {
                     document.querySelector('#serveV').value = '';
                     document.querySelector('#hoursV').value = '';
                     document.querySelector('#minutesV').value = '';
-                    document.querySelector('#stepsV').value = '';
                     document.querySelector('#imageV').value = '';
                     document.querySelector('#calV').value = '';
                     document.querySelector('#proteinV').value = '';
