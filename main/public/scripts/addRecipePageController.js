@@ -223,8 +223,8 @@ class AddRecipePageController {
             }
 
             //Validations
-            if (name == '' || serve == '' || hours == '' || minutes == '') {
-                alert('The following information cannot be left blank: Name, Servings, Hours and Minutes');
+            if (name == '' || serve == '' || hours == '' || minutes == '' || stepSearch.length == 0) {
+                alert('The following information cannot be left blank: Name, Servings, Hours, Minutes, and Steps');
                 return;
             }
 
