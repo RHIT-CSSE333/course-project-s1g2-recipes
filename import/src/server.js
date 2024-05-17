@@ -54,28 +54,22 @@ app.post('/addRecipe', (req, res) => {
         if(err)
             console.log('Failed with error: ' + err);
     });
-
-    let ID = req.body.id;
     let servings = 1;
     let difficulty = 1;
     let name = req.body.name;
-    // let date = req.body.submitted;
-    let imgURL  = 'https://i1.theportalwiki.net/img/thumb/0/0a/Portal_Cake.png/200px-Portal_Cake.png';
     let CreatorUsername = req.body.contributor_id;
     let steps = req.body.steps;
     let mins = req.body.minutes;
-    let time = Math.floor(mins/60) + ":" + mins%60 + ":0";
+
     if(Math.floor(mins/60)>23)
-        time = null;    
-    // request.addParameter('ID', TYPES.Int, ID);
+        mins = null;    
     request.addParameter('Servings', TYPES.Int, servings);
     request.addParameter('Difficulty', TYPES.SmallInt, difficulty);
     request.addParameter('Name', TYPES.VarChar, name);
-    // request.addParameter('CreateDate', TYPES.Date, date);
-    request.addParameter('ImageURL', TYPES.VarChar, imgURL);
+    request.addParameter('ImageURL', TYPES.VarChar, null);
     request.addParameter('CreatorUsername', TYPES.VarChar, CreatorUsername);
     request.addParameter('Steps', TYPES.Text, steps);
-    request.addParameter('Time', TYPES.VarChar, time);
+    request.addParameter('Time', TYPES.Int, mins);
     request.addOutputParameter('addedID', TYPES.Int);
     request.addOutputParameter('RetVal', TYPES.Int);
 

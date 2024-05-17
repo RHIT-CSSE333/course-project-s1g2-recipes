@@ -23,8 +23,8 @@ let config = {
     authentication: {
         type: 'default',
         options: {
-            userName: 'anandy',
-            password: 'Sparky@4'
+            userName: 's1g2User',
+            password: 'Password123'
         }
     },
     options: {
