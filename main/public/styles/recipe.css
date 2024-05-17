@@ -62,6 +62,16 @@ li::marker{
     font-weight: 700;
 }
 
+#nutInfo{
+    padding: 2em 0;
+    border-bottom: 2px solid #141E46;
+}
+
+.row{
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */

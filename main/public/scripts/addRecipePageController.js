@@ -1,8 +1,6 @@
 class AddRecipePageController {
     constructor() {
         console.log("addrecipepagecontroller");
-        // let addRecipeManager = new AddRecipeManager();
-        //difficulty dropdown menu
         let diffControl = document.querySelector('#diffValue');
         let diffArray = [1, 2, 3, 4, 5];
         let diffList = document.createElement('select');
@@ -322,7 +320,7 @@ class AddRecipePageController {
             }
 
 
-            let time = hours + ":" + minutes + ":00";
+            let time = hours*60 + minutes;
             let obj = { nameV: name, diffV: diff, serveV: serve, timeV: time, stepsV: stepValue, imageV: image, userV: user };
 
 

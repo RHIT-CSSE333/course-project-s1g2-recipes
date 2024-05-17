@@ -74,7 +74,7 @@ app.post('/addSingleRecipe', (req, res) => {
     request.addParameter('ImageURL', TYPES.VarChar, image);
     request.addParameter('CreatorUsername', TYPES.VarChar, user);
     request.addParameter('Steps', TYPES.Text, steps);
-    request.addParameter('Time', TYPES.VarChar, time);
+    request.addParameter('Time', TYPES.Int, time);
     request.addOutputParameter('RetVal', TYPES.Int);
     request.addOutputParameter('addedID', TYPES.Int);
     let inc = 0;

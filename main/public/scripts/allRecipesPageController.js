@@ -19,7 +19,7 @@ class AllRecipesPageController {
                     for(let j = 0; j < 5-recipes[i].rating; j++)
                         stars += '<span class="fa fa-star"></span>';
                     container.innerHTML += 
-                    `<div class="recipeCard">
+                    `<div id="${recipes[i].id}" class="recipeCard">
                         <img src="images/placeholder.png">
                         <h3>${recipes[i].name}</h3>
                         <p>Rating: ${stars}</p><br>
@@ -30,7 +30,7 @@ class AllRecipesPageController {
             const matches = document.querySelectorAll(".recipeCard");
             for(let i = 0; i < matches.length; i++){
                 matches[i].onclick = (event) => {
-                    window.location.href = `/recipe.html?id=${recipes[i].id}`;
+                    window.location.href = `/recipe.html?id=${matches[i].id}`;
                 };
             }
         });

@@ -15,6 +15,7 @@ class SingleRecipePageController{
     }
 
     updateView(recipe,id){
+        console.log(recipe)
         const average = array => array.reduce((a, b) => a + b) / array.length;
         document.querySelector('#recipePage').innerHTML = `
             <h1 id="recipeTitle">${recipe.name}</h1>
@@ -24,7 +25,7 @@ class SingleRecipePageController{
             <p>Difficulty: ${recipe.difficulty}</p>
             <img id="recipeImg" src="${recipe.imageURL}">
             <div id="recipeInfo">
-                <p>Time to make: <br> <span>${recipe.time} mins</span></p>
+                <p>Time to make: <br> <span>${Math.floor(recipe.time/60)} hours ${recipe.time%60} mins</span></p>
                 <p>Servings: <br> <span>${recipe.servings}</span></p>
             </div>
             <div id="ingredients">
@@ -33,6 +34,17 @@ class SingleRecipePageController{
             </div>
             <div id="steps">
                 <h1 class="header">Directions</h1>
+            </div>
+            <div id="nutInfo">
+                <h1 class="header">Nutritional Info</h1>
+                <div class="row">
+                    <p>Calories: ${recipe.calories||'--'}</p>
+                    <p>Carbs: ${recipe.carbs||'--'}</p>
+                </div>
+                <div class="row">
+                    <p>Protein: ${recipe.protein||'--'}</p>
+                    <p>Fats: ${recipe.fats||'--'}</p>
+                </div>
             </div>
             <button id='modalBtn' type="button">Write a Review</button>
             
