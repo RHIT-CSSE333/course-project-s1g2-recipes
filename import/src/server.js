@@ -24,7 +24,7 @@ let config = {
     },
     options: {
         encrypt: false,
-        database: 'S1G2_Recipe'
+        database: 'S1G2_Recipe2'
     }
 };
 
